@@ -12,11 +12,18 @@ export default function MakePhotoCard(): React.ReactElement {
                             <img />
                         </div>
                         <div className="capture_btn">
-                            <span className="material-icons">camera_enhance</span>
-                        </div>
-                    </div>
-                )}
-            </div>
+<<<<<<< HEAD
+    <span className="material-icons">camera_enhance</span>
+                        </div >
+=======
+                            <span className="material-symbols">
+                                add_a_photo
+                            </span>                        </div>
+>>>>>>> da4c806f48b9b7f60c79a68b81d16d22bc00e71f
+                    </div >
+                )
+}
+            </div >
             <div className="container_logos">
                 <p>1</p>
                 <p>2</p>
@@ -26,6 +33,6 @@ export default function MakePhotoCard(): React.ReactElement {
             <div className="contaienr_QR">
                 <img />
             </div>
-        </div>
+        </div >
     );
 }
