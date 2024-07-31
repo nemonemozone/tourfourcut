@@ -1,0 +1,148 @@
+//colors
+$blue: #3166ED;
+$pink: #F53C76;
+$yellow: #FDFF86;
+$navy: #001C47;
+$black: #292A2B;
+$white: #FFFFFF;
+
+//font faces - jejudoldam
+@font-face {
+    font-family: 'EF_jejudoldam';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+//font faces - ownglyph
+@font-face {
+    font-family: 'Ownglyph_UNZ-Rg';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2406-1@1.0/Ownglyph_UNZ-Rg.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+//font faces - Pretendard
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard.woff') format('woff');
+    font-style: normal;
+}
+
+//font - theme font(jejudoldam)
+@mixin theme_font($size: "default", $color: $black, $style: "lined") {
+    font-family: 'EF_jejudoldam';
+    letter-spacing: -0.05rem;
+    line-height: 150%;
+    color: $color;
+
+    //lined style
+    @if($style =="lined") {
+        text-shadow: 0px 2px 0px $color;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: $color;
+        color: white;
+    }
+
+    //font size huge(2rem)
+    @if($size =="huge") {
+        font-size: 2rem;
+    }
+
+    //font size large(1.5rem)
+    @if($size =="large") {
+        font-size: 1.5rem;
+    }
+
+    //font size default(1.25rem)
+    @if($size =="default") {
+        font-size: 1.25rem;
+    }
+
+    //font size small(1rem)
+    @if($size =="small") {
+        font-size: 1rem;
+    }
+}
+
+//font - main font(Ownglyph)
+@mixin main_font($size: "default", $color: $black) {
+    font-family: 'Ownglyph_UNZ-Rg';
+    line-height: 120%;
+    color: $color;
+
+    //font size huge(2.5rem)
+    @if($size =="huge") {
+        font-size: 2.5rem;
+    }
+
+    //font size large(2rem)
+    @if($size =="large") {
+        font-size: 2rem;
+    }
+
+    //font size default(1.5rem)
+    @if($size =="default") {
+        font-size: 1.25rem;
+    }
+
+    //font size small(1rem)
+    @if($size =="small") {
+        font-size: 1rem;
+    }
+}
+
+//font - sub font(pretendard)
+@mixin sub_font($size: "default", $color: $black, $style: "") {
+    font-family: 'Pretendard';
+    line-height: 150%;
+    color: $color;
+    font-weight: 400;
+
+    //font size huge(2rem)
+    @if($size =="huge") {
+        font-size: 2rem;
+    }
+
+    //font size large(1.5rem)
+    @if($size =="large") {
+        font-size: 1.5rem;
+    }
+
+    //font size default(1rem)
+    @if($size =="default") {
+        font-size: 1rem;
+    }
+
+    //font size small(0.75rem)
+    @if($size =="small") {
+        font-size: 0.75rem;
+    }
+
+    @if($style=="bold") {
+        font-weight: 700;
+    }
+}
+
+
+//default settings
+* {
+    //default margin, padding block
+    margin: 0;
+    padding: 0;
+
+    //text select block(look like an app as a website)
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+* {
+    @include main_font();
+}
+
+html {
+    font-size: 16px;
+}
