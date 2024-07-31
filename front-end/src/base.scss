@@ -30,7 +30,7 @@ $white: #FFFFFF;
 }
 
 //font - theme font(jejudoldam)
-@mixin theme_font($size: "default", $color: $black, $style: "lined") {
+@mixin theme_font($size: "default", $color: $black, $style: "") {
     font-family: 'EF_jejudoldam';
     letter-spacing: -0.05rem;
     line-height: 150%;
