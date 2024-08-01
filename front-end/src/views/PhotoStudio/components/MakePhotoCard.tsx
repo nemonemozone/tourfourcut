@@ -1,37 +1,45 @@
-export default function MakePhotoCard(): React.ReactElement {
+interface MakePhotoCardProps {
+    title: string;
+    date: string;
+    photo_list: [string, string, string, string];
+    logo_list: string[];
+}
+
+export default function MakePhotoCard(props: MakePhotoCardProps): React.ReactElement {
+    const title = props.title;
+    const date = props.date;
+    const photo_list = props.photo_list;
+    const logo_list = props.logo_list;
+
     return (
-        <div className="comp_make_photo_card">
+        <div className="comp_make_photo_card yellow">
             <div className="wrap_title_date">
-                <p className="title">2024 아그톤</p>
-                <p className="date">2024. 08. 04 ~ 2024. 08. 05</p>
+                <p className="title">{title}</p>
+                <p className="date">{date}</p>
             </div>
             <div className="container_pictures">
-                {[1, 2, 3, 4].map((picture_number) =>
+                {photo_list.map((photo_src) =>
                     <div className="wrap_picture_captureBtn">
-                        <div className="picture">
-                            <img />
-                        </div>
-                        <div className="capture_btn">
-<<<<<<< HEAD
-    <span className="material-icons">camera_enhance</span>
-                        </div >
-=======
-                            <span className="material-symbols">
-                                add_a_photo
-                            </span>                        </div>
->>>>>>> da4c806f48b9b7f60c79a68b81d16d22bc00e71f
-                    </div >
+                        {photo_src ? <div className="picture">
+                            <img src={photo_src} />
+                        </div> :
+                            <div className="capture_btn">
+                                <span className="material-icons icon">camera_enhance</span>
+                            </div>}
+                    </div>
                 )
-}
+                }
             </div >
-            <div className="container_logos">
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
-                <p>4</p>
+            <div className="comp_logo_container">
+                {logo_list.map((logo_src) =>
+                    <div className="container_logo">
+                        <img alt="logo image" src={logo_src} />
+                    </div>
+                )
+                }
             </div>
-            <div className="contaienr_QR">
-                <img />
+            <div className="container_QR">
+                <img src="/qrcode.svg" />
             </div>
         </div >
     );
