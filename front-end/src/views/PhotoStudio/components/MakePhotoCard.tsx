@@ -3,16 +3,14 @@ interface MakePhotoCardProps {
     date: string;
     photo_list: [string, string, string, string];
     logo_list: string[];
+    theme: "blue" | "pink" | "yellow" | "white";
 }
 
 export default function MakePhotoCard(eventInfo: MakePhotoCardProps): React.ReactElement {
-    const title = eventInfo.title;
-    const date = eventInfo.date;
-    const photo_list = eventInfo.photo_list;
-    const logo_list = eventInfo.logo_list;
+    const { title, date, photo_list, logo_list, theme } = eventInfo;
 
     return (
-        <div className="comp_make_photo_card yellow">
+        <div className={`comp_make_photo_card ${theme}`}>
             <div className="wrap_title_date">
                 <p className="title">{title}</p>
                 <p className="date">{date}</p>
