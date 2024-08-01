@@ -5,11 +5,11 @@ interface MakePhotoCardProps {
     logo_list: string[];
 }
 
-export default function MakePhotoCard(props: MakePhotoCardProps): React.ReactElement {
-    const title = props.title;
-    const date = props.date;
-    const photo_list = props.photo_list;
-    const logo_list = props.logo_list;
+export default function MakePhotoCard(eventInfo: MakePhotoCardProps): React.ReactElement {
+    const title = eventInfo.title;
+    const date = eventInfo.date;
+    const photo_list = eventInfo.photo_list;
+    const logo_list = eventInfo.logo_list;
 
     return (
         <div className="comp_make_photo_card yellow">
