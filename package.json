@@ -1,6 +1,13 @@
 {
   "dependencies": {
+    "@types/dom-to-image": "^2.6.7",
+    "@types/file-saver": "^2.0.7",
+    "dom-to-image": "^2.6.0",
+    "dom-to-image-more": "^3.3.1",
+    "doodle.css": "^0.0.2",
+    "file-saver": "^2.0.5",
     "react-router-dom": "^6.25.1",
+    "react-webcam": "^7.2.0",
     "sass": "^1.77.8"
   }
 }
