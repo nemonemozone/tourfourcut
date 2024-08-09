@@ -31,8 +31,8 @@ const getEventInfo = (_code: string) => {
 
 export default function PhotoStudio(): React.ReactElement {
     const [eventInfo, setEventData] = useState<EventInfo | null>(null);
-    const GET_EVENT_DATA_API = "http://localhost:3000/mockdata/photoStudioData.json";
-    const DEMO_EVENT_ID = "IGthon";
+    const DEMO_EVENT_ID = "igthon";
+    const GET_EVENT_DATA_API = `/mockdata/${DEMO_EVENT_ID}/photoStudioData.json`;
 
     const [selectedTheme, setSelectedTheme] = useState<theme>("blue");
     const [photo_list, setPhotoList] = useState<photo_list>(["", "", "", ""]);
@@ -41,7 +41,7 @@ export default function PhotoStudio(): React.ReactElement {
     const renderSubRef = useRef();
 
     useEffect(() => {
-        fetch(GET_EVENT_DATA_API + "/" + DEMO_EVENT_ID)
+        fetch(GET_EVENT_DATA_API)
             .then((res) => res.json())
             .then((data) => setEventData(data));
     }, []);
