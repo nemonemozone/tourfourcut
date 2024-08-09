@@ -1,0 +1,432 @@
+@import "../../base.scss";
+
+.page_photo_studio {
+    position: relative;
+
+    .comp_top_nav {
+        display: flex;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        justify-content: space-between;
+
+        .container_logo {
+            display: flex;
+            align-items: center;
+            column-gap: 0.5rem;
+
+            .container {
+                @include img_container($width: 2rem, $height: 2rem);
+            }
+
+            .logo_ci {
+                @include theme_font($color: $blue);
+            }
+        }
+
+        .btn_submit {
+            @include main_font($color: $blue);
+
+            &.full_false {
+                @include main_font($color: #B3B7BC);
+            }
+        }
+    }
+
+
+    .comp_make_photo_card {
+        $card_width: 21rem;
+        $card_height: 31rem;
+        margin: auto;
+        overflow: hidden;
+        width: $card_width;
+        height: $card_height;
+        border-radius: 0.5rem;
+        border: 1px solid $blue;
+        background-color: #E0ECFD;
+        position: relative;
+        border-style: wave-top;
+
+        .wrap_title_date {
+            text-align: center;
+            padding: 0.25rem;
+
+            .title {
+                @include theme_font($size: "large", $color: $blue, $style: "lined");
+            }
+
+            .date {
+                @include main_font($size: "small", $color: #777C89);
+                letter-spacing: -0.5px;
+            }
+        }
+
+        .container_pictures {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            row-gap: 0.25rem;
+            column-gap: 0.25rem;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            .wrap_picture_captureBtn {
+                width: 10rem;
+                height: 12rem;
+                border-radius: 4px;
+                border: 1px solid $blue;
+                background: linear-gradient(180deg, rgba(255, 255, 255), rgba(255, 255, 255, 0.2));
+                position: relative;
+                overflow: hidden;
+
+                .picture {
+                    @include img_container($width: 100%, $height: 100%);
+                }
+
+                .capture_btn {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 5rem;
+                    height: 5rem;
+                    border: 1px solid $blue;
+                    border-radius: 100%;
+                    background-color: #FFFFFF;
+                    box-shadow: 0px 4px 0px 0px rgba(red($blue), green($blue), blue($blue), 0.5);
+
+                    &.got_photo {
+                        color: white;
+                        background-color: #ffffff36;
+                        border: 1px solid rgba(255, 255, 255, 0.5);
+                        box-shadow: none;
+
+                        .icon {
+                            color: white;
+
+                        }
+                    }
+
+                    .icon {
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        transform: translate(-50%, -50%);
+                        font-size: 3rem;
+                        vertical-align: middle;
+                        color: $blue;
+                    }
+                }
+
+                .comp_capture {
+                    position: fixed;
+                    background-color: #000000;
+                    width: 100%;
+                    height: 100%;
+                    left: 0;
+                    top: 0;
+                    z-index: 1;
+
+                    .top_nav {
+                        position: fixed;
+                        width: 100%;
+                        height: 4.5rem;
+                        background-color: #000000dc;
+                        padding: 1rem 1.5rem;
+
+                        .icon {
+                            color: white;
+                            font-size: 1.5rem;
+                        }
+                    }
+
+                    .Comp-photo-canvas {
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        transform: translate(-50%, -50%);
+                        $photo_frame_ratio: 0.75;
+                        width: 100%;
+                        height: calc(100% * 1 / $photo_frame_ratio);
+                        max-width: 40rem;
+                        max-height: 40rem;
+
+                        .Comp-grid {
+                            .Comp-column {
+                                position: absolute;
+                                left: 50%;
+                                top: 0%;
+                                transform: translate(-50%, 0);
+                                width: 33.3%;
+                                height: 100%;
+                                border-left: 1px solid rgba(255, 255, 255, 0.3);
+                                border-right: 1px solid rgba(255, 255, 255, 0.3);
+                            }
+
+                            .Comp-row {
+                                position: absolute;
+                                left: 0%;
+                                top: 50%;
+                                transform: translate(0%, -50%);
+                                width: 100%;
+                                height: 33.3%;
+                                border-top: 1px solid rgba(255, 255, 255, 0.3);
+                                border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+                            }
+
+                        }
+                    }
+
+                    .Comp-controller {
+                        position: fixed;
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 10rem;
+                        background-color: #000000dc;
+                        display: flex;
+                        column-gap: 3.5rem;
+                        justify-content: center;
+                        align-items: center;
+
+
+                        .Comp-gallary-btn {
+                            .material-icons {
+                                font-size: 2rem;
+                                color: #ffffff2d;
+                            }
+
+                            cursor: pointer;
+                        }
+
+                        .Comp-capture-btn {
+                            border-radius: 100%;
+                            width: 5rem;
+                            height: 5rem;
+                            border: 2px solid #FFFFFF;
+
+                            &:hover,
+                            &:active {
+                                background-color: #ffffff2d;
+                                cursor: pointer;
+                            }
+                        }
+
+                        .Comp-turn-btn {
+                            .material-icons {
+                                font-size: 2rem;
+                                color: #FFFFFF;
+                            }
+
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+
+        .comp_logo_container {
+            display: flex;
+            width: $card_width;
+            height: 2rem;
+            margin-top: 0.5rem;
+            background-color: #FFFFFF;
+            border-top: 1px solid $pink;
+            padding: 0 1rem;
+            box-sizing: border-box;
+            column-gap: 0.5rem;
+            align-items: center;
+
+            .container_logo {
+                background-color: #FFFFFF;
+                @include img_container($width: 1.5rem, $height: 1.5rem);
+            }
+        }
+
+        .container_QR {
+            background-color: gray;
+            @include img_container($width: 3rem, $height: 3rem);
+            position: absolute;
+            overflow: hidden;
+            border-radius: 0.25rem;
+            border: 1px solid #C2C6D0;
+            right: 0.25rem;
+            bottom: 0.5rem;
+        }
+
+        //photocard theme: pink
+        &.pink {
+            border: 1px solid $pink;
+            background-color: #FFE9ED;
+
+            .title {
+                @include theme_font($size: "large", $color: $pink, $style: "lined");
+            }
+
+            .wrap_picture_captureBtn {
+                border: 1px solid $pink;
+
+                .capture_btn {
+                    border: 1px solid $pink;
+                    box-shadow: 0px 4px 0px 0px rgba(red($pink), green($pink), blue($pink), 0.5);
+
+                    &:active,
+                    &:hover {
+                        box-shadow: 0px 2px 0px 0px rgba(red($pink), green($pink), blue($pink), 0.5);
+                        background-color: rgba(red($pink), green($pink), blue($pink), 0.05);
+                    }
+
+                    .icon {
+                        color: $pink;
+                    }
+                }
+            }
+
+            .comp_logo_container {
+                border-top: 1px solid $pink;
+            }
+        }
+
+        //photocard theme: yellow
+        &.yellow {
+            border: 1px solid $navy;
+            background-color: $yellow;
+
+            .title {
+                @include theme_font($size: "large", $color: $navy, $style: "lined");
+            }
+
+            .wrap_picture_captureBtn {
+                border: 1px solid $navy;
+
+                .capture_btn {
+                    border: 1px solid $navy;
+                    box-shadow: 0px 4px 0px 0px rgba(red($navy), green($navy), blue($navy), 0.5);
+
+                    &:active,
+                    &:hover {
+                        box-shadow: 0px 2px 0px 0px rgba(red($blue), green($blue), blue($blue), 0.5);
+                        background-color: rgba(red($blue), green($blue), blue($blue), 0.05);
+                    }
+
+                    .icon {
+                        color: $navy;
+                    }
+                }
+
+
+            }
+
+            .comp_logo_container {
+                border-top: 1px solid $navy;
+            }
+        }
+
+        //photocard theme: blue
+        &.blue {
+            border: 1px solid $blue;
+            background-color: #E0ECFD;
+
+            .title {
+                @include theme_font($size: "large", $color: $blue, $style: "lined");
+            }
+
+            .wrap_picture_captureBtn {
+                border: 1px solid $blue;
+
+                .capture_btn {
+                    border: 1px solid $blue;
+                    box-shadow: 0px 4px 0px 0px rgba(red($blue), green($blue), blue($blue), 0.5);
+
+                    &:active,
+                    &:hover {
+                        box-shadow: 0px 2px 0px 0px rgba(red($blue), green($blue), blue($blue), 0.5);
+                        background-color: rgba(red($blue), green($blue), blue($blue), 0.05);
+                    }
+
+                    .icon {
+                        color: $blue;
+                    }
+                }
+            }
+
+            .comp_logo_container {
+                border-top: 1px solid $blue;
+            }
+        }
+
+        //photocard theme: white
+        &.white {
+            border: 1px solid $navy;
+            background-color: $white;
+
+            .title {
+                @include theme_font($size: "large", $color: $navy, $style: "lined");
+            }
+
+            .wrap_picture_captureBtn {
+                border: 1px solid $navy;
+
+                .capture_btn {
+                    border: 1px solid $navy;
+                    box-shadow: 0px 4px 0px 0px rgba(red($navy), green($navy), blue($navy), 0.5);
+
+                    &:active,
+                    &:hover {
+                        box-shadow: 0px 2px 0px 0px rgba(red($navy), green($navy), blue($navy), 0.5);
+                        background-color: rgba(red($navy), green($navy), blue($navy), 0.05);
+                    }
+
+                    .icon {
+                        color: $navy;
+                    }
+                }
+            }
+
+            .comp_logo_container {
+                border-top: 1px solid $navy;
+            }
+        }
+    }
+
+    .comp_theme_palette {
+        display: flex;
+        justify-content: center;
+        column-gap: 0.5rem;
+        margin-top: 1rem;
+
+        .theme_selection {
+            background-color: $yellow;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid #C2C6D0;
+
+            &.blue {
+                background-color: #E0ECFD;
+            }
+
+            &.pink {
+                background-color: #FFE9ED;
+            }
+
+            &.white {
+                background-color: #FFFFFF;
+            }
+
+            &.yellow {
+                background-color: $yellow;
+            }
+
+            &.selected {
+                border: 2px solid $blue;
+                box-shadow: 0px 0px 0px 2px $blue inset;
+            }
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
