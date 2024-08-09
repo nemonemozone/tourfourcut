@@ -1,6 +1,7 @@
 import React from "react";
 import "./base.scss";
 import PhotoStudio from "./views/PhotoStudio/PhotoStudio";
+import Succeed from "./views/Succeed/Succeed";
 import "./App.css";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -12,6 +13,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<PhotoStudio />}></Route>
+            <Route path="/succeed" element={<Succeed />}></Route>
           </Routes></BrowserRouter>
 
       </header>
