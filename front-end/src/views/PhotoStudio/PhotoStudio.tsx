@@ -5,6 +5,7 @@ import ThemePalette from "./components/ThemePalette";
 import "./PhotoStudio.scss";
 import domtoimage from 'dom-to-image-more';
 import { saveAs } from 'file-saver';
+import Loading from "../Loading/Loading";
 
 export type theme = "pink" | "blue" | "yellow" | "white";
 type logo_list = string[];//length less than 10
@@ -14,20 +15,6 @@ type EventInfo = {
     date: string;
     logo_list: logo_list;
 };
-
-
-
-const getEventInfo = (_code: string) => {
-    //fetch event information data by event code
-
-
-    //mock data
-    return {
-        "title": "2024 아그톤",
-        "date": "2024. 08. 04~2024. 08. 05",
-        "logo_list": ["", "", ""]
-    }
-}
 
 export default function PhotoStudio(): React.ReactElement {
     const [eventInfo, setEventData] = useState<EventInfo | null>(null);
@@ -67,7 +54,6 @@ export default function PhotoStudio(): React.ReactElement {
             })
             .then((_blob) => {
                 saveAs(_blob, "gogo.jpeg");
-                console.log(_blob.text);
                 return _blob;
             });
 
@@ -97,6 +83,6 @@ export default function PhotoStudio(): React.ReactElement {
                 <ThemePalette selectedTheme={selectedTheme} changeSelectedTheme={setSelectedTheme} />
             </div>
             :
-            <p>loading...</p>
+            <Loading />
     );
 }
