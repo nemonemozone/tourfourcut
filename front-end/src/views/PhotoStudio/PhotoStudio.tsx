@@ -5,29 +5,33 @@ import ThemePalette from "./components/ThemePalette";
 import "./PhotoStudio.scss";
 import domtoimage from 'dom-to-image-more';
 import { saveAs } from 'file-saver';
+import Loading from "../Loading/Loading";
 
 export type theme = "pink" | "blue" | "yellow" | "white";
 type logo_list = string[];//length less than 10
 type photo_list = [string, string, string, string] //length 4
-
-const getEventInfo = (_code: string) => {
-    //fetch event information data by event code
-
-    //mock data
-    return {
-        "title": "2024 아그톤",
-        "date": "2024. 08. 04~2024. 08. 05",
-        "logo_list": ["", "", ""]
-    }
-}
+type EventInfo = {
+    title: string;
+    date: string;
+    logo_list: logo_list;
+};
 
 export default function PhotoStudio(): React.ReactElement {
-    const eventInfo = getEventInfo("eventCode");
+    const [eventInfo, setEventData] = useState<EventInfo | null>(null);
+    const DEMO_EVENT_ID = "igthon";
+    const GET_EVENT_DATA_API = `/mockdata/${DEMO_EVENT_ID}/photoStudioData.json`;
+
     const [selectedTheme, setSelectedTheme] = useState<theme>("blue");
     const [photo_list, setPhotoList] = useState<photo_list>(["", "", "", ""]);
     //send to TopNav and MakePhotocard components. it would be used to render photo card
     const renderPhotoRef = useRef<HTMLDivElement>(null);
     const renderSubRef = useRef();
+
+    useEffect(() => {
+        fetch(GET_EVENT_DATA_API)
+            .then((res) => res.json())
+            .then((data) => setEventData(data));
+    }, []);
 
     const render_photo = () => {
         const card = renderPhotoRef.current;
@@ -50,7 +54,6 @@ export default function PhotoStudio(): React.ReactElement {
             })
             .then((_blob) => {
                 saveAs(_blob, "gogo.jpeg");
-                console.log(_blob.text);
                 return _blob;
             });
 
@@ -65,18 +68,21 @@ export default function PhotoStudio(): React.ReactElement {
     }
 
     return (
-        <div className="page_photo_studio">
-            <TopNav photo_list={photo_list} render_photo={render_photo} />
-            <MakePhotoCard title={eventInfo.title}
-                date={eventInfo.date}
-                photo_list={photo_list}
-                logo_list={eventInfo.logo_list}
-                theme={selectedTheme}
-                change_photo={change_photo}
-                photo_render_ref={renderPhotoRef}
-                render_sub_ref={renderSubRef}
-            />
-            <ThemePalette selectedTheme={selectedTheme} changeSelectedTheme={setSelectedTheme} />
-        </div>
+        eventInfo ?
+            <div className="page_photo_studio">
+                <TopNav photo_list={photo_list} render_photo={render_photo} />
+                <MakePhotoCard title={eventInfo.title}
+                    date={eventInfo.date}
+                    photo_list={photo_list}
+                    logo_list={eventInfo.logo_list}
+                    theme={selectedTheme}
+                    change_photo={change_photo}
+                    photo_render_ref={renderPhotoRef}
+                    render_sub_ref={renderSubRef}
+                />
+                <ThemePalette selectedTheme={selectedTheme} changeSelectedTheme={setSelectedTheme} />
+            </div>
+            :
+            <Loading />
     );
 }

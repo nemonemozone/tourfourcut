@@ -1,0 +1,19 @@
+@import "../../base.scss";
+
+.page_loading {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .container_LOGO {
+        @include img_container($width: 3.5rem, $height: 3.5rem);
+    }
+
+    .description {
+        margin-top: 0.5rem;
+        @include theme_font($size: 1.5rem, $color: $blue, $style: "lined");
+    }
+}
