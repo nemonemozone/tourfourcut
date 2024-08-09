@@ -14,10 +14,9 @@ export default function TopNav(props: any): React.ReactElement {
         //navigate to next page
         if (is_full(photo_list)) {
             render_photo();
-            // navigate("/succeed");
+            navigate("/succeed");
         }
         else {
-            render_photo();
             window.alert("사진을 모두 촬영하기 전입니다.");
         }
     }
