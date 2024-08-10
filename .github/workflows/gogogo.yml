@@ -34,6 +34,10 @@ jobs:
         run: npm install
         working-directory: ./front-end
 
+      - name: install ci plugin
+        run: npm install --save-dev @babel/plugin-proposal-private-property-in-object
+        working-directory: ./front-end
+
 
       - name: Build react app
         run: npm run build
