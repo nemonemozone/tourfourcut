@@ -31,7 +31,7 @@ jobs:
 
       - name: Build react app
         run: npm run build
-        working-directory: ../../front-end
+        working-directory: ./front-end
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
