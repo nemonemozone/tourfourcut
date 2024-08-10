@@ -40,7 +40,9 @@ jobs:
 
 
       - name: Build react app
-        run: npm run build
+        run: |
+          unset CI
+          npm run build
         working-directory: ./front-end
 
       - name: Configure AWS credentials
