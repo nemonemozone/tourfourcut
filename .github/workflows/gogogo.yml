@@ -55,7 +55,7 @@ jobs:
       - name: Upload to S3
         env:
           BUCKET_NAME: happics-frontend
-        run: aws s3 sync ./build s3://$BUCKET_NAME
+        run: aws s3 sync ./front-end/build s3://$BUCKET_NAME
 
       - name: CloudFront Invalidation
         env:
