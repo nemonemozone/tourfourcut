@@ -1,0 +1,86 @@
+@import "../../base.scss";
+
+.page_succeed{
+    .comp_top_nav {
+        display: flex;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        justify-content: space-between;
+
+        .container_logo {
+            display: flex;
+            align-items: center;
+            column-gap: 0.5rem;
+            &:hover{
+                cursor: pointer;
+            }
+    
+            .container {
+                @include img_container($width: 2rem, $height: 2rem);
+            }
+
+            .logo_ci {
+                @include theme_font($color: $blue);
+            }
+        }
+    }
+    .wrap_photo_restart_btn{
+        padding: 1rem 1.5rem;
+        position: relative;
+        &:hover{
+            cursor: pointer;
+            filter: brightness(1.1);   
+        }
+        .container_photo_card{
+            @include img_container($width: 100%);
+            max-width: 25rem;
+            margin: auto;
+
+        }
+        .btn_restart{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 5rem;
+            height: 5rem;
+            z-index: 1;
+            border: 2px solid $blue;
+            background: rgba(255, 255, 255, 0.90);
+            border-radius: 100%;
+            padding: 1rem;
+            box-sizing: border-box;
+            .icon{
+                font-size: 3rem;
+                color: $blue;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                vertical-align: middle;
+                line-height: 100%;
+            }
+        }
+    }
+    .container_btn{
+        width: 100%;
+        padding: 2rem 1.5rem;
+        box-sizing: border-box;
+        .icon{
+            color: white;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        .btn_download{
+            width: 100%;
+            height: 3.5rem;
+            border-radius: 1.25rem;
+            @include main_font($color: #FFFFFF, $size: "large");
+            border: none;
+            background-color: $blue;
+            &:hover{
+                cursor: pointer;
+                filter: brightness(1.1);
+            }
+        }
+    }
+}
