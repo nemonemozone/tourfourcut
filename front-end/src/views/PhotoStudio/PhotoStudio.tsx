@@ -53,7 +53,7 @@ export default function PhotoStudio(): React.ReactElement {
                 }
             })
             .then((_blob) => {
-                saveAs(_blob, "gogo.jpeg");
+                // saveAs(_blob, "gogo.jpeg");
                 return _blob;
             });
 
