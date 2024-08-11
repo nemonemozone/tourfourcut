@@ -4,8 +4,8 @@ import TopNav from "./components/TopNav";
 import ThemePalette from "./components/ThemePalette";
 import "./PhotoStudio.scss";
 import domtoimage from 'dom-to-image-more';
-import { saveAs } from 'file-saver';
 import Loading from "../Loading/Loading";
+import { useParams } from "react-router-dom";
 
 export type theme = "pink" | "blue" | "yellow" | "white";
 type logo_list = string[];//length less than 10
@@ -18,19 +18,33 @@ type EventInfo = {
 
 export default function PhotoStudio(): React.ReactElement {
     const [eventInfo, setEventData] = useState<EventInfo | null>(null);
-    const DEMO_EVENT_ID = "igthon";
-    const GET_EVENT_DATA_API = `/mockdata/${DEMO_EVENT_ID}/photoStudioData.json`;
-
     const [selectedTheme, setSelectedTheme] = useState<theme>("blue");
     const [photo_list, setPhotoList] = useState<photo_list>(["", "", "", ""]);
+    const params = useParams();
+    const eventID = params.eventID;
+    const GET_EVENT_DATA_API = `${process.env.REACT_APP_API}/eventInfo/${eventID}`;
+
     //send to TopNav and MakePhotocard components. it would be used to render photo card
     const renderPhotoRef = useRef<HTMLDivElement>(null);
     const renderSubRef = useRef();
 
     useEffect(() => {
-        fetch(GET_EVENT_DATA_API)
-            .then((res) => res.json())
-            .then((data) => setEventData(data));
+        const mock_data = {
+            "title": "Happics",
+            "date": "2024. 08. 04~2024. 08. 05",
+            "logo_list": [
+                "/LOGO_aws.svg", "/LOGO_nxtCloud.svg", "/LOGO_Happics.svg"
+            ]
+        }
+        if (!eventID) {
+            setEventData(mock_data);
+        }
+        else {
+            fetch(GET_EVENT_DATA_API)
+                .then((res) => res.json())
+                .then((data) => { setEventData(JSON.parse(data.body)); })
+                .catch((error) => { console.log(error); setEventData(mock_data) });
+        }
     }, []);
 
     const render_photo = () => {
@@ -53,7 +67,6 @@ export default function PhotoStudio(): React.ReactElement {
                 }
             })
             .then((_blob) => {
-                // saveAs(_blob, "gogo.jpeg");
                 return _blob;
             });
 
