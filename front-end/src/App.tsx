@@ -13,6 +13,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<PhotoStudio />}></Route>
+            <Route path="/:eventID" element={<PhotoStudio />} />
             <Route path="/succeed" element={<Succeed />}></Route>
           </Routes></BrowserRouter>
 
