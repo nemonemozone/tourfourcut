@@ -11,7 +11,6 @@ export default function NewEvent(): React.ReactElement {
     const navigate = useNavigate();
 
     const post_new_event = (_title: string, _dateStart: string, _dateEnd: string) => {
-        console.log(EVENT_DATA_API);
         fetch(EVENT_DATA_API, {
             method: "POST",
             body: JSON.stringify({

@@ -30,8 +30,8 @@ export default function PhotoStudio(): React.ReactElement {
 
     useEffect(() => {
         const mock_data = {
-            "name": "Happics",
-            "date": "2024. 08. 04~2024. 08. 05",
+            "name": "해커네컷",
+            "date": new Date().toISOString().split("T")[0],
             "logo_list": [
                 "/LOGO_aws.svg", "/LOGO_nxtCloud.svg", "/LOGO_Happics.svg"
             ]
