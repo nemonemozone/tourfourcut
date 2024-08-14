@@ -10,8 +10,8 @@ export default function ThemePalette(props: themePaletteProps): React.ReactEleme
     const themes: [theme, theme, theme, theme] = ["blue", "pink", "yellow", "white"];
     const { selectedTheme, changeSelectedTheme } = props;
     return (<div className="comp_theme_palette">
-        {themes.map((theme) =>
-            <div className={`theme_selection ${theme} ${theme == selectedTheme && "selected"}`} onClick={() => { changeSelectedTheme(theme) }}></div>
+        {themes.map((theme, idx) =>
+            <div className={`theme_selection ${theme} ${theme == selectedTheme && "selected"}`} key={idx} onClick={() => { changeSelectedTheme(theme) }}></div>
         )}
     </div>);
 }
