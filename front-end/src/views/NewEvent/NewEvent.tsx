@@ -14,7 +14,7 @@ export default function NewEvent(): React.ReactElement {
         fetch(EVENT_DATA_API, {
             method: "POST",
             body: JSON.stringify({
-                Method: "POST", name: _title, date: `${_dateStart}~${_dateEnd}`, logo_list: ["gogo.png", "go.png"]
+                Method: "POST", name: _title, date: `${_dateStart}~${_dateEnd}`, logo_list: ["/LOGO_aws.svg", "/LOGO_nxtCloud.svg", "/LOGO_Happics.svg"]
             }),
         }).then((response) => { console.log(response.json()); navigate(`/${_title}`) })
     }
