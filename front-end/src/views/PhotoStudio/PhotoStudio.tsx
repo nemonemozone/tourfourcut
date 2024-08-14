@@ -11,7 +11,7 @@ export type theme = "pink" | "blue" | "yellow" | "white";
 type logo_list = string[];//length less than 10
 type photo_list = [string, string, string, string] //length 4
 type EventInfo = {
-    title: string;
+    name: string;
     date: string;
     logo_list: logo_list;
 };
@@ -30,7 +30,7 @@ export default function PhotoStudio(): React.ReactElement {
 
     useEffect(() => {
         const mock_data = {
-            "title": "Happics",
+            "name": "Happics",
             "date": "2024. 08. 04~2024. 08. 05",
             "logo_list": [
                 "/LOGO_aws.svg", "/LOGO_nxtCloud.svg", "/LOGO_Happics.svg"
@@ -42,7 +42,10 @@ export default function PhotoStudio(): React.ReactElement {
         else {
             fetch(GET_EVENT_DATA_API)
                 .then((res) => res.json())
-                .then((data) => { setEventData(JSON.parse(data.body)); })
+                .then((data) => {
+                    if (data.body != "null") setEventData(JSON.parse(data.body));
+                    else setEventData((mock_data));
+                })
                 .catch((error) => { console.log(error); setEventData(mock_data) });
         }
     }, []);
@@ -84,7 +87,7 @@ export default function PhotoStudio(): React.ReactElement {
         eventInfo ?
             <div className="page_photo_studio">
                 <TopNav photo_list={photo_list} render_photo={render_photo} />
-                <MakePhotoCard title={eventInfo.title}
+                <MakePhotoCard title={eventInfo.name}
                     date={eventInfo.date}
                     photo_list={photo_list}
                     logo_list={eventInfo.logo_list}
