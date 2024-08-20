@@ -8,7 +8,7 @@ import Loading from "../Loading/Loading";
 import { useParams } from "react-router-dom";
 
 export type theme = "pink" | "blue" | "yellow" | "white";
-type logo_list = string[];//length less than 10
+type logo_list = string;//length less than 10
 type photo_list = [string, string, string, string] //length 4
 type EventInfo = {
     name: string;
@@ -20,11 +20,11 @@ export default function PhotoStudio(): React.ReactElement {
     const [eventInfo, setEventData] = useState<EventInfo | null>(null);
     const [selectedTheme, setSelectedTheme] = useState<theme>("blue");
     const [photo_list, setPhotoList] = useState<photo_list>(["", "", "", ""]);
+    const [logo_src_list, setLogoSrcList] = useState<string[]>();
     const params = useParams();
     const eventID = params.eventID;
     const GET_EVENT_DATA_API = `${process.env.REACT_APP_API}/eventInfo/${eventID}`;
-
-    //send to TopNav and MakePhotocard components. it would be used to render photo card
+    const LOGO_API = `${process.env.REACT_APP_API}/files/logo/${eventID}`;
     const renderPhotoRef = useRef<HTMLDivElement>(null);
     const renderSubRef = useRef();
 
@@ -32,16 +32,19 @@ export default function PhotoStudio(): React.ReactElement {
         const mock_data = {
             "name": "해커네컷",
             "date": new Date().toISOString().split("T")[0],
-            "logo_list": [
-                "/LOGO_aws.svg", "/LOGO_nxtCloud.svg", "/LOGO_Happics.svg"
-            ]
+            "logo_list":
+                "/LOGO_aws.svg,/LOGO_nxtCloud.svg,/LOGO_Happics.svg"
+
         }
         if (!eventID) {
             setEventData(mock_data);
         }
         else {
             fetch(GET_EVENT_DATA_API)
-                .then((res) => res.json())
+                .then((res) => {
+                    console.log(res);
+                    return res.json()
+                })
                 .then((data) => {
                     if (data.body != "null") setEventData(JSON.parse(data.body));
                     else setEventData((mock_data));
@@ -49,6 +52,19 @@ export default function PhotoStudio(): React.ReactElement {
                 .catch((error) => { console.log(error); setEventData(mock_data) });
         }
     }, []);
+
+    useEffect(() => {
+        fetch(LOGO_API)
+            .then((_res) => _res.json())
+            .then((_body) => {
+                console.log(_body);
+                setLogoSrcList(JSON.parse(_body));
+            })
+            .catch((_e) => {
+                console.log(_e);
+                setLogoSrcList([]);
+            })
+    }, [eventInfo?.logo_list]);
 
     const render_photo = () => {
         const card = renderPhotoRef.current;
@@ -90,7 +106,7 @@ export default function PhotoStudio(): React.ReactElement {
                 <MakePhotoCard title={eventInfo.name}
                     date={eventInfo.date}
                     photo_list={photo_list}
-                    logo_list={eventInfo.logo_list}
+                    logo_list={logo_src_list}
                     theme={selectedTheme}
                     change_photo={change_photo}
                     photo_render_ref={renderPhotoRef}

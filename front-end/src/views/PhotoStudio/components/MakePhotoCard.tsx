@@ -1,11 +1,11 @@
-import React, { useState, useRef, Ref } from 'react';
+import React, { useState, useRef, Ref, useEffect } from 'react';
 import Webcam from 'react-webcam';
 
 interface MakePhotoCardProps {
     title: string;
     date: string;
     photo_list: [string, string, string, string];
-    logo_list: string[];
+    logo_list: string[] | undefined;
     theme: "blue" | "pink" | "yellow" | "white";
     change_photo: (_idx: number, _newSrc: string) => void;
     photo_render_ref: any;
@@ -39,6 +39,7 @@ export default function MakePhotoCard(eventInfo: MakePhotoCardProps): React.Reac
     const handle_mirror_btn = (_idx: number) => {
         setIsFacingmodeUser(!is_facingMode_user);
     }
+
 
     return (
         <div ref={photo_render_ref}>
@@ -100,7 +101,10 @@ export default function MakePhotoCard(eventInfo: MakePhotoCardProps): React.Reac
                     }
                 </div >
                 <div className="comp_logo_container">
-                    {logo_list.map((logo_src, key) =>
+                    <div className="container_logo">
+                        <img alt="logo image" src={"/LOGO_Happics.svg"} />
+                    </div>
+                    {logo_list && logo_list.map((logo_src, key) =>
                         <div key={key} className="container_logo">
                             <img alt="logo image" src={logo_src} />
                         </div>
