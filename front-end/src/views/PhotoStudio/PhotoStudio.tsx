@@ -46,6 +46,7 @@ export default function PhotoStudio(): React.ReactElement {
                     return res.json()
                 })
                 .then((data) => {
+                    console.log(data);
                     if (data.body != "null") setEventData(JSON.parse(data.body));
                     else setEventData((mock_data));
                 })
@@ -86,13 +87,55 @@ export default function PhotoStudio(): React.ReactElement {
                 }
             })
             .then((_blob) => {
+                const PHOTO_API = `${process.env.REACT_APP_API}/files/photo_card/${eventID}`;
+                const file = new File([_blob], 'image.png', {
+                    type: _blob.type,
+                });
+                const post_res = post_photos([file], PHOTO_API);
+
                 return _blob;
             });
+
+
 
         return blob;
     }
 
+    const base64_to_file_obj = (dataurl: string, filename: string): File => {
+        const arr = dataurl.split(',');
+        const mime = arr[0].match(/:(.*?);/)?.[1] || '';
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        return new File([u8arr], filename, { type: mime });
+    }
+
+    const post_photos = async (_file_obj_list: File[], _api: string) => {
+
+        const formData = new FormData();
+
+        for (const _file_obj of _file_obj_list) {
+            formData.append("image_list", _file_obj);
+        }
+        const res = await fetch(_api, {
+            method: "POST",
+            body: formData
+        })
+            .then((_res) => { console.log(_res); return _res.json(); })
+            .then((_json) => { console.log(_json); return JSON.parse(_json.body) });
+        return res;
+    }
+
     const change_photo = (_idx: number, _src: string) => {
+        const PHOTO_API = `${process.env.REACT_APP_API}/files/pictures/${eventID}`;
+        const file_obj = [base64_to_file_obj(_src, "image.png")];
+        const post_res = post_photos(file_obj, PHOTO_API);
+
         if (_idx < 0 || photo_list.length - 1 < _idx) return;
         const newPhotoList = [...photo_list];
         newPhotoList[_idx] = _src;

@@ -11,13 +11,13 @@ export default function TopNav(props: any): React.ReactElement {
     const is_full = (_arr: string[]) => {
         return _arr.every((elem) => elem.length !== 0);
     }
-    const handleSubmitBtn =async () => {
+    const handleSubmitBtn = async () => {
         //navigate to next page
         if (is_full(photo_list)) {
             const blob = await render_photo();
-            navigate("/succeed", {state: blob});
+            navigate("/succeed", { state: blob });
         }
-        else {  
+        else {
             window.alert("사진을 모두 촬영하기 전입니다.");
         }
     }

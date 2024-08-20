@@ -46,7 +46,7 @@ export default function Gallary(): React.ReactElement {
                 <div>
                     <p>{event_name}에서 촬영된 사진 목록</p>
                     {pictures64.map((src64, index) => (
-                        <img key={index} src={`data:image/png;base64,${src64}`} alt={`Gallery image ${index}`} />
+                        <img key={index} src={src64} alt={`Gallery image ${index}`} />
                     ))}
                 </div>
             )}

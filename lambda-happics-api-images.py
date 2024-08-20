@@ -5,7 +5,6 @@ import cgi
 import io
 import base64
 import os
-from datetime import datetime
 
 s3 = boto3.client('s3')
 BUCKET_NAME = "happics"
@@ -36,17 +35,25 @@ def lambda_handler(event, context):
 
         return json.dumps(response)
 
-    else: #METHOD == POST
+    elif METHOD=="UPDATE":
         images_data = parse_multipart_data(event)
         remove_s3_files_of(_bucket_name = BUCKET_NAME, _path =PATH)
-        
         key_list = upload_images_to_s3(images_data, PATH)
-        print(key_list)
         return {
             'statusCode': 200,
             'body': json.dumps([key_list]),
             'headers': {"Content-Type": "application/json"}
         }
+    
+    elif METHOD=="POST":
+        images_data = parse_multipart_data(event)
+        key_list = upload_images_to_s3(images_data, PATH)
+        return {
+            'statusCode': 200,
+            'body': json.dumps([key_list]),
+            'headers': {"Content-Type": "application/json"}
+        }
+
             
             
 def remove_s3_files_of(_bucket_name, _path):
@@ -92,9 +99,11 @@ def parse_multipart_data(event):
 
 def upload_images_to_s3(_images_data, _path):
     """S3에 이미지들을 업로드하고 업로드된 폴더 이름을 반환하는 함수"""
+    from datetime import datetime
+
     path_arr = []
-    for idx, image_data in enumerate(_images_data):
-        file_name = f"{idx+1}.png"
+    for image_data in _images_data:
+        file_name = f"{datetime.now().strftime('%Y-%m-%d,%H-%M-%S')}.png"
         path = _path + file_name
         path_arr.append(path)
         try:
