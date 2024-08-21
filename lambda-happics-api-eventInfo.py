@@ -1,15 +1,10 @@
 import json
 import boto3
-from datetime import datetime
 from boto3.dynamodb.conditions import Key
-import base64
-import boto3
+import uuid
 import json
-import cgi
-import io
 import base64
 import os
-from datetime import datetime
 
 
 class DatabaseAccess():
@@ -18,7 +13,7 @@ class DatabaseAccess():
         self.table = self.dynamodb.Table(TABLE_NAME)
     
     def get_data(self, query_name):
-        response = self.table.query( KeyConditionExpression=Key('name').eq(query_name))
+        response = self.table.query( KeyConditionExpression=Key('ID').eq(query_name))
         if response['Items']:
             return response['Items'][0]
         else:
@@ -32,21 +27,23 @@ class DatabaseAccess():
         
 
 def lambda_handler(event, context):
-    db_access = DatabaseAccess("happics-event")
+    db_access = DatabaseAccess("happics-event-info")
     db_res = ""
     
     if event['Method'] == 'POST':
+        eventID = str(uuid.uuid1()).split('-')[0]
         input_data = {
+        "ID":eventID,
         "name":event['name'],
         "date":event['date'],
         "logo_list": event['logo_list']
         }
-        db_res = db_access.put_data(input_data)
+        db_access.put_data(input_data)
+        db_res = {"ID":eventID}
     
     elif event['Method'] == 'GET':
-        event_name = event.get("name")
-        db_res = db_access.get_data(event_name)
-        print(db_res)
+        eventID = event.get("name")
+        db_res = db_access.get_data(eventID)
         
     return {
         'statusCode': 200,

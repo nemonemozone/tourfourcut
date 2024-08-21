@@ -2,11 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function TopNav(props: any): React.ReactElement {
-    const { photo_list, render_photo } = props;
+    const { photo_list, render_photo, eventID } = props;
     const navigate = useNavigate();
     // const history = useHistory();
     const handleLogoBtn = () => {
-        navigate("/");
+        navigate("/" + eventID);
     }
     const is_full = (_arr: string[]) => {
         return _arr.every((elem) => elem.length !== 0);
@@ -15,7 +15,7 @@ export default function TopNav(props: any): React.ReactElement {
         //navigate to next page
         if (is_full(photo_list)) {
             const blob = await render_photo();
-            navigate("/succeed", { state: blob });
+            navigate("/succeed", { state: { "image": blob, "eventID": eventID } });
         }
         else {
             window.alert("사진을 모두 촬영하기 전입니다.");

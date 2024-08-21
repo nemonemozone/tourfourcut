@@ -30,6 +30,7 @@ export default function PhotoStudio(): React.ReactElement {
 
     useEffect(() => {
         const mock_data = {
+            "ID": "default",
             "name": "해커네컷",
             "date": new Date().toISOString().split("T")[0],
             "logo_list":
@@ -145,7 +146,7 @@ export default function PhotoStudio(): React.ReactElement {
     return (
         eventInfo ?
             <div className="page_photo_studio">
-                <TopNav photo_list={photo_list} render_photo={render_photo} />
+                <TopNav photo_list={photo_list} render_photo={render_photo} eventID={eventID} />
                 <MakePhotoCard title={eventInfo.name}
                     date={eventInfo.date}
                     photo_list={photo_list}

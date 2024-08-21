@@ -7,18 +7,23 @@ export default function NewEvent(): React.ReactElement {
     const [title, setTitle] = useState("");
     const [dateStart, setDateStart] = useState(today);
     const [dateEnd, setDateEnd] = useState(today);
-    const EVENT_DATA_API = `${process.env.REACT_APP_API}/eventInfo/${title}`;
-    const LOGO_UPLOAD_API = `${process.env.REACT_APP_API}/files/logo/${title}`;
+    const EVENT_DATA_API = `${process.env.REACT_APP_API}/eventInfo`;
     const navigate = useNavigate();
     const [logo_list, setLogoList] = useState<File[]>([]);
 
-    const post_new_event = (_title: string, _dateStart: string, _dateEnd: string, _logo_key_list: string[]) => {
-        fetch(EVENT_DATA_API, {
+    const post_new_event = async (_title: string, _dateStart: string, _dateEnd: string, _logo_key_list: string[]) => {
+        const date = _dateStart == _dateEnd ? (_dateStart).replaceAll("-", ". ") : (`${_dateStart}~${_dateEnd}`).replaceAll("-", ". ")
+        const post_event_res = await fetch(EVENT_DATA_API, {
             method: "POST",
             body: JSON.stringify({
-                Method: "POST", name: _title, date: `${_dateStart}~${_dateEnd}`, logo_list: `${_logo_key_list}`
+                Method: "POST", name: _title, date: date, logo_list: `${_logo_key_list}`
             }),
-        }).then((response) => { console.log(response.json()); })
+        })
+            .then((response) => response.json())
+            .then((_json) => {
+                return JSON.parse(_json.body);
+            })
+        return post_event_res;
     }
 
     const handleSubmit = async (event: any) => {
@@ -29,28 +34,10 @@ export default function NewEvent(): React.ReactElement {
         }
 
         try {
-            // 중복된 이름이 존재하는지 아닌지 확인
-            const data = await fetch(EVENT_DATA_API)
-                .then((_res) => {
-                    console.log(_res);
-                    return _res.json();
-                })
-                .then((_json) => {
-                    console.log(_json);
-                    return _json;
-                })
-
-            // 중복된 이름이 없을 경우 성공
-            if (data.body === "null") {
-                const upload_logo_res = await upload_logo(title, logo_list);
-                console.log(upload_logo_res);
-                // const logo_key_list = JSON.stringify(upload_logo_res);
-                post_new_event(title, dateStart, dateEnd, upload_logo_res);
-                navigate(`/${title}`);
-            } else {
-                // 중복된 이름이 있을 경우 실패
-                window.alert("이미 존재하는 행사명입니다.");
-            }
+            const post_res = await post_new_event(title, dateStart, dateEnd, ["upload_logo_res"]);
+            const eventID = post_res.ID;
+            upload_logo(eventID, logo_list);
+            navigate(`/${eventID}`);
         } catch (error) {
             console.error("Error during submission:", error);
             window.alert("서버 오류가 발생했습니다.");
@@ -70,9 +57,10 @@ export default function NewEvent(): React.ReactElement {
         }
     }
 
-    const upload_logo = async (_title: string, _logo_obj_list: any) => {
+    const upload_logo = async (_eventID: string, _logo_obj_list: any) => {
+        const LOGO_UPLOAD_API = `${process.env.REACT_APP_API}/files/logo/${_eventID}`;
         const formData = new FormData();
-        formData.append("event_name", _title);
+        formData.append("event_name", _eventID);
 
         for (const _file_obj of _logo_obj_list) {
             formData.append("image_list", _file_obj);
