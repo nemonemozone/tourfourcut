@@ -1,5 +1,5 @@
 import React from "react"
-import { theme } from "../PhotoStudio";
+import { theme } from "../../../types/eventInfo";
 
 interface themePaletteProps {
     selectedTheme: theme;

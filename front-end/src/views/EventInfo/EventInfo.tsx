@@ -2,18 +2,15 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import QRCode from "react-qr-code";
+import { eventInfo } from "../../types/eventInfo";
 
 export default function EventInfo(): React.ReactElement {
     const params = useParams();
     const navigate = useNavigate();
     const eventID = params.eventID;
-    type EventInfo = {
-        name: string;
-        date: string;
-    };
-    const [eventInfo, setEventData] = useState<EventInfo | null>(null);
+    const [eventInfo, setEventData] = useState<eventInfo | null>(null);
     const EVENT_DATA_API = `${process.env.REACT_APP_API}/eventInfo/${eventID}`;
-    const title = "이벤트 이름";
+    const title = eventInfo?.name;
     const handle_photo_studio_btn = ()=>{
         navigate(`/${eventID}`);   
     }
@@ -22,7 +19,7 @@ export default function EventInfo(): React.ReactElement {
         fetch(EVENT_DATA_API)
             .then((res) => res.json())
             .then((data) => {
-                if (data.body != "null") setEventData(JSON.parse(data.body));
+                if (data.body != "null") setEventData(JSON.parse(data.body)[0]);
                 else window.alert("개최되지 않은 행사입니다.");
             })
             .catch((error) => { console.log(error); window.alert("서버 오류가 발생했습니다."); });
@@ -33,7 +30,7 @@ export default function EventInfo(): React.ReactElement {
             eventID ?
                 <div className="page_event_info">
                     <div className="comp_header">
-                        <span>행사명: </span><p>{eventInfo?.name}</p>
+                        <span>행사명: </span><p>{title}</p>
                         <span>초대 링크: </span><a href={`${process.env.REACT_APP_WEB_HREF}/${eventID}`}>{`${process.env.REACT_APP_WEB_HREF}/${eventID}`}</a>
                     </div>
                     <div className="comp_invite_card">

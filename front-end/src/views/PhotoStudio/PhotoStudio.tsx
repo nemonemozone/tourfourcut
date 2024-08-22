@@ -7,18 +7,18 @@ import domtoimage from 'dom-to-image-more';
 import Loading from "../Loading/Loading";
 import { useParams } from "react-router-dom";
 import 'doodle.css/doodle.css'
+import { eventInfo, theme, photo_list } from "../../types/eventInfo";
 
-export type theme = "pink" | "blue" | "yellow" | "white";
-type logo_list = string;//length less than 10
-type photo_list = [string, string, string, string] //length 4
-type EventInfo = {
-    name: string;
-    date: string;
-    owner:string;
-};
+
 
 export default function PhotoStudio(): React.ReactElement {
-    const [eventInfo, setEventData] = useState<EventInfo | null>(null);
+    const mock_data = {
+        "ID": "default",
+        "name": "Happics",
+        "date": (new Date().toISOString().split("T")[0]).replaceAll("-", ". "),
+        "owner":"eemune"
+    }
+    const [eventInfo, setEventData] = useState<eventInfo | null>(mock_data);
     const [selectedTheme, setSelectedTheme] = useState<theme>("blue");
     const [photo_list, setPhotoList] = useState<photo_list>(["", "", "", ""]);
     const [logo_src_list, setLogoSrcList] = useState<string[]>();
@@ -28,7 +28,6 @@ export default function PhotoStudio(): React.ReactElement {
     const LOGO_API = `${process.env.REACT_APP_API}/files/logo/${eventID}`;
     const renderPhotoRef = useRef<HTMLDivElement>(null);
     const renderSubRef = useRef();
-    const userID = "bjking";
 
     useEffect(() => {
         try{
@@ -36,12 +35,6 @@ export default function PhotoStudio(): React.ReactElement {
             fetch_logo_img_src(eventID!);
         }
         catch{
-            const mock_data = {
-                "ID": "default",
-                "name": "Happics",
-                "date": (new Date().toISOString().split("T")[0]).replaceAll("-", ". "),
-                "owner":userID,
-            }
             setEventData(mock_data);
         }
     }, []);
@@ -50,7 +43,7 @@ export default function PhotoStudio(): React.ReactElement {
         fetch(LOGO_API)
             .then((_res) => _res.json())
         .then((_body) => {
-            setLogoSrcList(JSON.parse(_body));
+            setLogoSrcList(JSON.parse(_body)[0]);
         })
         .catch((_e) => {
             console.log(_e);
@@ -64,7 +57,7 @@ export default function PhotoStudio(): React.ReactElement {
             return res.json()
         })
         .then((data) => {
-            setEventData(JSON.parse(data.body));
+            setEventData(JSON.parse(data.body)[0]);
         })
         .catch((error) => { console.log(error);});
     }
@@ -128,8 +121,8 @@ export default function PhotoStudio(): React.ReactElement {
             method: "POST",
             body: formData
         })
-            .then((_res) => { console.log(_res); return _res.json(); })
-            .then((_json) => { console.log(_json); return JSON.parse(_json.body) });
+            .then((_res) => _res.json())
+            .then((_json) =>  JSON.parse(_json.body) );
         return res;
     }
 

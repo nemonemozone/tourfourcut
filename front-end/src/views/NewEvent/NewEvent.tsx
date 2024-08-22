@@ -10,19 +10,19 @@ export default function NewEvent(): React.ReactElement {
     const EVENT_DATA_API = `${process.env.REACT_APP_API}/eventInfo`;
     const navigate = useNavigate();
     const [logo_list, setLogoList] = useState<File[]>([]);
+    const userID = "bjking";
 
-    const post_new_event = async (_title: string, _dateStart: string, _dateEnd: string, _logo_key_list: string[]) => {
+    const post_new_event = async (_title: string, _dateStart: string, _dateEnd: string, _ownerID:string) => {
+        console.log(_ownerID);
         const date = _dateStart == _dateEnd ? (_dateStart).replaceAll("-", ". ") : (`${_dateStart}~${_dateEnd}`).replaceAll("-", ". ")
         const post_event_res = await fetch(EVENT_DATA_API, {
             method: "POST",
             body: JSON.stringify({
-                Method: "POST", name: _title, date: date, logo_list: `${_logo_key_list}`
+                Method: "POST", name: _title, date: date, owner:_ownerID
             }),
         })
-            .then((response) => response.json())
-            .then((_json) => {
-                return JSON.parse(_json.body);
-            })
+            .then((response) =>response.json())
+            .then((_json) => JSON.parse(_json.body))
         return post_event_res;
     }
 
@@ -34,7 +34,7 @@ export default function NewEvent(): React.ReactElement {
         }
 
         try {
-            const post_res = await post_new_event(title, dateStart, dateEnd, ["upload_logo_res"]);
+            const post_res = await post_new_event(title, dateStart, dateEnd, userID);
             const eventID = post_res.ID;
             upload_logo(eventID, logo_list);
             navigate(`/admin/${eventID}`);
