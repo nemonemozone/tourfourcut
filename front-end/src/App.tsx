@@ -9,6 +9,8 @@ import NewEvent from "./views/NewEvent/NewEvent";
 import UpdateLogo from "./views/UpdateLogo/UpdateLogo";
 import UploadLogo from "./views/UploadLogo/UploadLogo";
 import Gallary from "./views/Gallary/Gallary";
+import EventList from "./views/EventList/EventList";
+import EventInfo from "./views/EventInfo/EventInfo";
 
 function App() {
   return (
@@ -22,8 +24,8 @@ function App() {
             <Route path="/admin/newEvent" element={<NewEvent />}></Route>
             <Route path="/admin/logo/:event_name" element={<UploadLogo />}></Route>
             <Route path="/admin/gallary/:event_name" element={<Gallary/>}/>
+            <Route path="/admin/:eventID" element={<EventInfo/>}/>
           </Routes></BrowserRouter>
-
       </header>
     </div>
   );

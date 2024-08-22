@@ -37,7 +37,7 @@ export default function NewEvent(): React.ReactElement {
             const post_res = await post_new_event(title, dateStart, dateEnd, ["upload_logo_res"]);
             const eventID = post_res.ID;
             upload_logo(eventID, logo_list);
-            navigate(`/${eventID}`);
+            navigate(`/admin/${eventID}`);
         } catch (error) {
             console.error("Error during submission:", error);
             window.alert("서버 오류가 발생했습니다.");

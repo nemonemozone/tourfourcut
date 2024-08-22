@@ -6,6 +6,7 @@ import "./PhotoStudio.scss";
 import domtoimage from 'dom-to-image-more';
 import Loading from "../Loading/Loading";
 import { useParams } from "react-router-dom";
+import 'doodle.css/doodle.css'
 
 export type theme = "pink" | "blue" | "yellow" | "white";
 type logo_list = string;//length less than 10
@@ -31,11 +32,10 @@ export default function PhotoStudio(): React.ReactElement {
     useEffect(() => {
         const mock_data = {
             "ID": "default",
-            "name": "해커네컷",
-            "date": new Date().toISOString().split("T")[0],
+            "name": "Happics",
+            "date": (new Date().toISOString().split("T")[0]).replaceAll("-", ". "),
             "logo_list":
                 "/LOGO_aws.svg,/LOGO_nxtCloud.svg,/LOGO_Happics.svg"
-
         }
         if (!eventID) {
             setEventData(mock_data);
@@ -155,6 +155,7 @@ export default function PhotoStudio(): React.ReactElement {
                     change_photo={change_photo}
                     photo_render_ref={renderPhotoRef}
                     render_sub_ref={renderSubRef}
+                    eventID = {eventID}
                 />
                 <ThemePalette selectedTheme={selectedTheme} changeSelectedTheme={setSelectedTheme} />
             </div>

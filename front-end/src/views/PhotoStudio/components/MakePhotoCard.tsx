@@ -1,4 +1,5 @@
 import React, { useState, useRef, Ref, useEffect } from 'react';
+import QRCode from 'react-qr-code';
 import Webcam from 'react-webcam';
 
 interface MakePhotoCardProps {
@@ -10,10 +11,11 @@ interface MakePhotoCardProps {
     change_photo: (_idx: number, _newSrc: string) => void;
     photo_render_ref: any;
     render_sub_ref: any;
+    eventID:string|undefined;
 }
 
 export default function MakePhotoCard(eventInfo: MakePhotoCardProps): React.ReactElement {
-    const { title, date, photo_list, logo_list, theme, change_photo, photo_render_ref, render_sub_ref } = eventInfo;
+    const { title, date, photo_list, logo_list, theme, change_photo, photo_render_ref, render_sub_ref, eventID } = eventInfo;
     const [running_cam_idx, setRunningCamIdx] = useState<number>(-1);
     const [is_facingMode_user, setIsFacingmodeUser] = useState<boolean>(false);
     const webcamRef: any = useRef<any>(null);
@@ -112,7 +114,7 @@ export default function MakePhotoCard(eventInfo: MakePhotoCardProps): React.Reac
                     }
                 </div>
                 <div className="container_QR">
-                    <img src="/qrcode.svg" />
+                    <QRCode value={`${process.env.REACT_APP_WEB_HREF}/${eventID}`} size={45} />
                 </div>
             </div>
 

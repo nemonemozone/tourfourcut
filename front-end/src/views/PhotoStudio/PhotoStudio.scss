@@ -246,14 +246,16 @@
         }
 
         .container_QR {
-            background-color: gray;
-            @include img_container($width: 3rem, $height: 3rem);
+            background-color: white;
+            padding: 4px;
             position: absolute;
             overflow: hidden;
             border-radius: 0.25rem;
             border: 1px solid #C2C6D0;
             right: 0.25rem;
             bottom: 0.5rem;
+            width: fit-content;
+            height: fit-content;
         }
 
         //photocard theme: pink

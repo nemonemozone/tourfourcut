@@ -22,5 +22,8 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  "paths": {
+    "*": ["node_modules/@types/*", "node_modules/*"]
+  }
 }
