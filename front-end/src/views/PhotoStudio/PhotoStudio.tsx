@@ -14,7 +14,7 @@ type photo_list = [string, string, string, string] //length 4
 type EventInfo = {
     name: string;
     date: string;
-    logo_list: logo_list;
+    owner:string;
 };
 
 export default function PhotoStudio(): React.ReactElement {
@@ -28,45 +28,46 @@ export default function PhotoStudio(): React.ReactElement {
     const LOGO_API = `${process.env.REACT_APP_API}/files/logo/${eventID}`;
     const renderPhotoRef = useRef<HTMLDivElement>(null);
     const renderSubRef = useRef();
+    const userID = "bjking";
 
     useEffect(() => {
-        const mock_data = {
-            "ID": "default",
-            "name": "Happics",
-            "date": (new Date().toISOString().split("T")[0]).replaceAll("-", ". "),
-            "logo_list":
-                "/LOGO_aws.svg,/LOGO_nxtCloud.svg,/LOGO_Happics.svg"
+        try{
+            fetch_event_data(eventID!);
+            fetch_logo_img_src(eventID!);
         }
-        if (!eventID) {
+        catch{
+            const mock_data = {
+                "ID": "default",
+                "name": "Happics",
+                "date": (new Date().toISOString().split("T")[0]).replaceAll("-", ". "),
+                "owner":userID,
+            }
             setEventData(mock_data);
-        }
-        else {
-            fetch(GET_EVENT_DATA_API)
-                .then((res) => {
-                    console.log(res);
-                    return res.json()
-                })
-                .then((data) => {
-                    console.log(data);
-                    if (data.body != "null") setEventData(JSON.parse(data.body));
-                    else setEventData((mock_data));
-                })
-                .catch((error) => { console.log(error); setEventData(mock_data) });
         }
     }, []);
 
-    useEffect(() => {
+    const fetch_logo_img_src = (_eventID:string)=>{
         fetch(LOGO_API)
             .then((_res) => _res.json())
-            .then((_body) => {
-                console.log(_body);
-                setLogoSrcList(JSON.parse(_body));
-            })
-            .catch((_e) => {
-                console.log(_e);
-                setLogoSrcList([]);
-            })
-    }, [eventInfo?.logo_list]);
+        .then((_body) => {
+            setLogoSrcList(JSON.parse(_body));
+        })
+        .catch((_e) => {
+            console.log(_e);
+            setLogoSrcList([]);
+        })   
+    }
+
+    const fetch_event_data = (_eventID:string) =>{
+        fetch(GET_EVENT_DATA_API)
+        .then((res) => {
+            return res.json()
+        })
+        .then((data) => {
+            setEventData(JSON.parse(data.body));
+        })
+        .catch((error) => { console.log(error);});
+    }
 
     const render_photo = () => {
         const card = renderPhotoRef.current;
