@@ -16,7 +16,7 @@ export default function PhotoStudio(): React.ReactElement {
         "ID": "default",
         "name": "Happics",
         "date": (new Date().toISOString().split("T")[0]).replaceAll("-", ". "),
-        "owner":"eemune"
+        "owner": "eemune"
     }
     const [eventInfo, setEventData] = useState<eventInfo | null>(mock_data);
     const [selectedTheme, setSelectedTheme] = useState<theme>("blue");
@@ -30,36 +30,37 @@ export default function PhotoStudio(): React.ReactElement {
     const renderSubRef = useRef();
 
     useEffect(() => {
-        try{
+        try {
             fetch_event_data(eventID!);
             fetch_logo_img_src(eventID!);
         }
-        catch{
+        catch {
             setEventData(mock_data);
         }
     }, []);
 
-    const fetch_logo_img_src = (_eventID:string)=>{
+    const fetch_logo_img_src = (_eventID: string) => {
         fetch(LOGO_API)
             .then((_res) => _res.json())
-        .then((_body) => {
-            setLogoSrcList(JSON.parse(_body)[0]);
-        })
-        .catch((_e) => {
-            console.log(_e);
-            setLogoSrcList([]);
-        })   
+            .then((_body) => {
+                setLogoSrcList(JSON.parse(_body));
+            })
+            .catch((_e) => {
+                console.log(_e);
+                setLogoSrcList([]);
+            })
     }
 
-    const fetch_event_data = (_eventID:string) =>{
+    const fetch_event_data = (_eventID: string) => {
         fetch(GET_EVENT_DATA_API)
-        .then((res) => {
-            return res.json()
-        })
-        .then((data) => {
-            setEventData(JSON.parse(data.body)[0]);
-        })
-        .catch((error) => { console.log(error);});
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+                console.log(data.body)
+                setEventData(JSON.parse(data.body)[0]);
+            })
+            .catch((error) => { console.log(error); });
     }
 
     const render_photo = () => {
@@ -122,7 +123,7 @@ export default function PhotoStudio(): React.ReactElement {
             body: formData
         })
             .then((_res) => _res.json())
-            .then((_json) =>  JSON.parse(_json.body) );
+            .then((_json) => JSON.parse(_json.body));
         return res;
     }
 
@@ -149,7 +150,7 @@ export default function PhotoStudio(): React.ReactElement {
                     change_photo={change_photo}
                     photo_render_ref={renderPhotoRef}
                     render_sub_ref={renderSubRef}
-                    eventID = {eventID}
+                    eventID={eventID}
                 />
                 <ThemePalette selectedTheme={selectedTheme} changeSelectedTheme={setSelectedTheme} />
             </div>

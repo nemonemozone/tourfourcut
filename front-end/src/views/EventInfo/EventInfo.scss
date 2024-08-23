@@ -1,0 +1,25 @@
+@import "../../base.scss";
+
+.page_event_info {
+    .comp_invite_card {
+        position: relative;
+        width: fit-content;
+        height: fit-content;
+
+        .icon {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            font-size: 2rem;
+            transform: translate(-50%, -50%);
+            background-color: $blue;
+            color: $white;
+            border-radius: 100%;
+            padding: 1rem;
+        }
+    }
+
+    .btn_navigate_photo_studio {
+        @include button;
+    }
+}
