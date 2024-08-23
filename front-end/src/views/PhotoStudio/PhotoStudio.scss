@@ -34,17 +34,155 @@
 
 
     .comp_make_photo_card {
+        display: flex;
+        justify-content: center;
         $card_width: 21rem;
         $card_height: 31rem;
-        margin: auto;
-        overflow: hidden;
-        width: $card_width;
-        height: $card_height;
-        border-radius: 0.5rem;
-        border: 1px solid $blue;
-        background-color: #E0ECFD;
-        position: relative;
-        border-style: wave-top;
+
+        .comp_card {
+            overflow: hidden;
+            width: $card_width;
+            height: $card_height;
+            border-radius: 0.5rem;
+            border: 1px solid $blue;
+            background-color: #E0ECFD;
+            position: relative;
+            border-style: wave-top;
+
+            //photocard theme: pink
+            &.pink {
+                border: 1px solid $pink;
+                background-color: #FFE9ED;
+
+                .title {
+                    @include theme_font($size: "large", $color: $pink, $style: "lined");
+                }
+
+                .wrap_picture_captureBtn {
+                    border: 1px solid $pink;
+
+                    .capture_btn {
+                        border: 1px solid $pink;
+                        box-shadow: 0px 4px 0px 0px rgba(red($pink), green($pink), blue($pink), 0.5);
+
+                        &:active,
+                        &:hover {
+                            box-shadow: 0px 2px 0px 0px rgba(red($pink), green($pink), blue($pink), 0.5);
+                            background-color: rgba(red($pink), green($pink), blue($pink), 0.05);
+                        }
+
+                        .icon {
+                            color: $pink;
+                        }
+                    }
+                }
+
+                .comp_logo_container {
+                    border-top: 1px solid $pink;
+                }
+            }
+
+            //photocard theme: yellow
+            &.yellow {
+                border: 1px solid $navy;
+                background-color: $yellow;
+
+                .title {
+                    @include theme_font($size: "large", $color: $navy, $style: "lined");
+                }
+
+                .wrap_picture_captureBtn {
+                    border: 1px solid $navy;
+
+                    .capture_btn {
+                        border: 1px solid $navy;
+                        box-shadow: 0px 4px 0px 0px rgba(red($navy), green($navy), blue($navy), 0.5);
+
+                        &:active,
+                        &:hover {
+                            box-shadow: 0px 2px 0px 0px rgba(red($blue), green($blue), blue($blue), 0.5);
+                            background-color: rgba(red($blue), green($blue), blue($blue), 0.05);
+                        }
+
+                        .icon {
+                            color: $navy;
+                        }
+                    }
+
+
+                }
+
+                .comp_logo_container {
+                    border-top: 1px solid $navy;
+                }
+            }
+
+            //photocard theme: blue
+            &.blue {
+                border: 1px solid $blue;
+                background-color: #E0ECFD;
+
+                .title {
+                    @include theme_font($size: "large", $color: $blue, $style: "lined");
+                }
+
+                .wrap_picture_captureBtn {
+                    border: 1px solid $blue;
+
+                    .capture_btn {
+                        border: 1px solid $blue;
+                        box-shadow: 0px 4px 0px 0px rgba(red($blue), green($blue), blue($blue), 0.5);
+
+                        &:active,
+                        &:hover {
+                            box-shadow: 0px 2px 0px 0px rgba(red($blue), green($blue), blue($blue), 0.5);
+                            background-color: rgba(red($blue), green($blue), blue($blue), 0.05);
+                        }
+
+                        .icon {
+                            color: $blue;
+                        }
+                    }
+                }
+
+                .comp_logo_container {
+                    border-top: 1px solid $blue;
+                }
+            }
+
+            //photocard theme: white
+            &.white {
+                border: 1px solid $navy;
+                background-color: $white;
+
+                .title {
+                    @include theme_font($size: "large", $color: $navy, $style: "lined");
+                }
+
+                .wrap_picture_captureBtn {
+                    border: 1px solid $navy;
+
+                    .capture_btn {
+                        border: 1px solid $navy;
+                        box-shadow: 0px 4px 0px 0px rgba(red($navy), green($navy), blue($navy), 0.5);
+
+                        &:active,
+                        &:hover {
+                            box-shadow: 0px 2px 0px 0px rgba(red($navy), green($navy), blue($navy), 0.5);
+                            background-color: rgba(red($navy), green($navy), blue($navy), 0.05);
+                        }
+
+                        .icon {
+                            color: $navy;
+                        }
+                    }
+                }
+
+                .comp_logo_container {
+                    border-top: 1px solid $navy;
+                }
+            }
+        }
 
         .wrap_title_date {
             text-align: center;
@@ -66,6 +204,7 @@
             flex-wrap: wrap;
             row-gap: 0.25rem;
             column-gap: 0.25rem;
+            padding-bottom: 0.5rem;
 
             &:hover {
                 cursor: pointer;
@@ -82,7 +221,6 @@
 
                 .picture {
                     @include img_container($width: 100%, $height: 100%);
-                    filter: brightness(1.2);
                 }
 
                 .capture_btn {
@@ -231,7 +369,6 @@
             display: flex;
             width: $card_width;
             height: 2rem;
-            margin-top: 0.5rem;
             background-color: #FFFFFF;
             border-top: 1px solid $pink;
             padding: 0 1rem;
@@ -256,140 +393,6 @@
             bottom: 0.5rem;
             width: fit-content;
             height: fit-content;
-        }
-
-        //photocard theme: pink
-        &.pink {
-            border: 1px solid $pink;
-            background-color: #FFE9ED;
-
-            .title {
-                @include theme_font($size: "large", $color: $pink, $style: "lined");
-            }
-
-            .wrap_picture_captureBtn {
-                border: 1px solid $pink;
-
-                .capture_btn {
-                    border: 1px solid $pink;
-                    box-shadow: 0px 4px 0px 0px rgba(red($pink), green($pink), blue($pink), 0.5);
-
-                    &:active,
-                    &:hover {
-                        box-shadow: 0px 2px 0px 0px rgba(red($pink), green($pink), blue($pink), 0.5);
-                        background-color: rgba(red($pink), green($pink), blue($pink), 0.05);
-                    }
-
-                    .icon {
-                        color: $pink;
-                    }
-                }
-            }
-
-            .comp_logo_container {
-                border-top: 1px solid $pink;
-            }
-        }
-
-        //photocard theme: yellow
-        &.yellow {
-            border: 1px solid $navy;
-            background-color: $yellow;
-
-            .title {
-                @include theme_font($size: "large", $color: $navy, $style: "lined");
-            }
-
-            .wrap_picture_captureBtn {
-                border: 1px solid $navy;
-
-                .capture_btn {
-                    border: 1px solid $navy;
-                    box-shadow: 0px 4px 0px 0px rgba(red($navy), green($navy), blue($navy), 0.5);
-
-                    &:active,
-                    &:hover {
-                        box-shadow: 0px 2px 0px 0px rgba(red($blue), green($blue), blue($blue), 0.5);
-                        background-color: rgba(red($blue), green($blue), blue($blue), 0.05);
-                    }
-
-                    .icon {
-                        color: $navy;
-                    }
-                }
-
-
-            }
-
-            .comp_logo_container {
-                border-top: 1px solid $navy;
-            }
-        }
-
-        //photocard theme: blue
-        &.blue {
-            border: 1px solid $blue;
-            background-color: #E0ECFD;
-
-            .title {
-                @include theme_font($size: "large", $color: $blue, $style: "lined");
-            }
-
-            .wrap_picture_captureBtn {
-                border: 1px solid $blue;
-
-                .capture_btn {
-                    border: 1px solid $blue;
-                    box-shadow: 0px 4px 0px 0px rgba(red($blue), green($blue), blue($blue), 0.5);
-
-                    &:active,
-                    &:hover {
-                        box-shadow: 0px 2px 0px 0px rgba(red($blue), green($blue), blue($blue), 0.5);
-                        background-color: rgba(red($blue), green($blue), blue($blue), 0.05);
-                    }
-
-                    .icon {
-                        color: $blue;
-                    }
-                }
-            }
-
-            .comp_logo_container {
-                border-top: 1px solid $blue;
-            }
-        }
-
-        //photocard theme: white
-        &.white {
-            border: 1px solid $navy;
-            background-color: $white;
-
-            .title {
-                @include theme_font($size: "large", $color: $navy, $style: "lined");
-            }
-
-            .wrap_picture_captureBtn {
-                border: 1px solid $navy;
-
-                .capture_btn {
-                    border: 1px solid $navy;
-                    box-shadow: 0px 4px 0px 0px rgba(red($navy), green($navy), blue($navy), 0.5);
-
-                    &:active,
-                    &:hover {
-                        box-shadow: 0px 2px 0px 0px rgba(red($navy), green($navy), blue($navy), 0.5);
-                        background-color: rgba(red($navy), green($navy), blue($navy), 0.05);
-                    }
-
-                    .icon {
-                        color: $navy;
-                    }
-                }
-            }
-
-            .comp_logo_container {
-                border-top: 1px solid $navy;
-            }
         }
     }
 

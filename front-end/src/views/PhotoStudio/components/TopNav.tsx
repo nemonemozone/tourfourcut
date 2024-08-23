@@ -13,7 +13,7 @@ export default function TopNav(props: any): React.ReactElement {
     }
     const handleSubmitBtn = async () => {
         //navigate to next page
-        if (is_full(photo_list)) {
+        if (is_full(photo_list) || true) {
             const blob = await render_photo();
             navigate("/succeed", { state: { "image": blob, "eventID": eventID } });
         }
