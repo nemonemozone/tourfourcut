@@ -22,4 +22,12 @@
     .btn_navigate_photo_studio {
         @include button;
     }
+
+    .btn_navigate_gallary{
+        @include button;
+        background-color: white;
+        border: 1px solid $blue;
+        color: $blue;
+        margin-top: 1rem;
+    }
 }

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 export default function Gallary(): React.ReactElement {
     const { event_name } = useParams();
-    const GALLARY_API = `${process.env.REACT_APP_API}/files/pictures/${event_name}`;
+    const GALLARY_API = `${process.env.REACT_APP_API}/files/photo_card/${event_name}`;
     const [pictures64, setPictures64] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -16,8 +16,11 @@ export default function Gallary(): React.ReactElement {
             if (response.ok) {
                 if (0 < pictures.length) {
                     setPictures64(pictures);
+                    console.log(response);
                 } else {
                     setError("아직 촬영된 사진이 없습니다.");
+                    console.log(response);
+
                 }
             } else {
                 throw new Error("Failed to fetch pictures");

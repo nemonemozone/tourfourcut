@@ -45,10 +45,15 @@ export default function EventInfo(): React.ReactElement {
                 return _blob;
             });
     }
+    const handle_gallary_btn = ()=>{
+        navigate("/admin/gallary/"+eventID);
+    }
     return (<div>
         {
             eventID ?
                 <div className="page_event_info">
+                        <button className="btn_navigate_photo_studio" onClick={handle_photo_studio_btn}>행사 사진 촬영 바로가기</button>
+                        <button className="btn_navigate_gallary" onClick={handle_gallary_btn}>촬영된 사진 목록</button>
                     <div className="comp_header">
                         <p>행사명: {title}</p>
                         <CopyToClipboard text={`${process.env.REACT_APP_WEB_HREF}/${eventID}`} onCopy={() => alert("클립보드에 초대 링크가 복사되었습니다.")} >
@@ -63,7 +68,6 @@ export default function EventInfo(): React.ReactElement {
                         <span className="material-icons icon" onClick={handle_down_qr} ref={qr_download_btn}>download</span>
                         <QRCode className="asset_qr" value={`${process.env.REACT_APP_WEB_HREF}/${eventID}`} />
                     </div>
-                    <button className="btn_navigate_photo_studio" onClick={handle_photo_studio_btn}>행사 사진 촬영 바로가기</button>
                 </div>
                 : <Loading />
         }
