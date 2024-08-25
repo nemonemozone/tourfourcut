@@ -58,6 +58,8 @@ export default function PhotoStudio(): React.ReactElement {
                 return res.json()
             })
             .then((data) => {
+                console.log(data);
+                console.log("GOGOGOGO");
                 console.log(data.body)
                 setEventData(JSON.parse(data.body)[0]);
             })
