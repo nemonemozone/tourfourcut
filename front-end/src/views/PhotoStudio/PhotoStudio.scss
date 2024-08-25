@@ -195,7 +195,7 @@
             }
 
             .date {
-                @include main_font($size: "small", $color: #777C89);
+                @include main_font($size: "small", $color: $blue);
                 letter-spacing: -0.5px;
             }
         }
