@@ -38,6 +38,14 @@ jobs:
         run: npm install --save-dev @babel/plugin-proposal-private-property-in-object
         working-directory: ./front-end
 
+      - name: copying react .env files
+        env:
+          API: ${{ secrets.REACT_APP_API }}
+          S3: ${{ secrets.REACT_APP_S3 }}
+          WEB_HREF: ${{ secrets.REACT_APP_WEB_HREF }}
+        run: echo "REACT_APP_API=$REACT_APP_API \n REACT_APP_S3 = $REACT_APP_S3 \n REACT_APP_WEB_HREF = $REACT_APP_WEB_HREF" >> .env
+        working-directory: ./front-end
+
 
       - name: Build react app
         run: |
