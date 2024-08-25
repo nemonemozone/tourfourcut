@@ -60,6 +60,11 @@
                     @include theme_font($size: "large", $color: $pink, $style: "lined");
                 }
 
+                .date {
+                    @include main_font($size: "small", $color: $navy);
+                    letter-spacing: -0.5px;
+                }
+
                 .wrap_picture_captureBtn {
                     border: 1px solid $pink;
 
@@ -91,6 +96,10 @@
 
                 .title {
                     @include theme_font($size: "large", $color: $navy, $style: "lined");
+                }
+                .date {
+                    @include main_font($size: "small", $color: $navy);
+                    letter-spacing: -0.5px;
                 }
 
                 .wrap_picture_captureBtn {
@@ -127,6 +136,7 @@
                 .title {
                     @include theme_font($size: "large", $color: $blue, $style: "lined");
                 }
+                
 
                 .wrap_picture_captureBtn {
                     border: 1px solid $blue;
@@ -159,6 +169,11 @@
 
                 .title {
                     @include theme_font($size: "large", $color: $navy, $style: "lined");
+                }
+
+                .date {
+                    @include main_font($size: "small", $color: $navy);
+                    letter-spacing: -0.5px;
                 }
 
                 .wrap_picture_captureBtn {

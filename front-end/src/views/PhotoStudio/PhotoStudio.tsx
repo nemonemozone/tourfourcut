@@ -24,7 +24,7 @@ export default function PhotoStudio(): React.ReactElement {
     const [logo_src_list, setLogoSrcList] = useState<string[]>();
     const params = useParams();
     const eventID = params.eventID;
-    const GET_EVENT_DATA_API = `${process.env.REACT_APP_API}/api/eventInfo/${eventID}`;
+    const GET_EVENT_DATA_API = `${process.env.REACT_APP_API}/eventInfo/${eventID}`;
     const LOGO_API = `${process.env.REACT_APP_API}/files/logo/${eventID}`;
     const renderPhotoRef = useRef<HTMLDivElement>(null);
     const renderSubRef = useRef();
