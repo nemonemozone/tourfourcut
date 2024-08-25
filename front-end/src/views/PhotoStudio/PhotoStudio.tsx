@@ -14,7 +14,7 @@ import { eventInfo, theme, photo_list } from "../../types/eventInfo";
 export default function PhotoStudio(): React.ReactElement {
     const mock_data = {
         "ID": "default",
-        "name": "Happics",
+        "name": "Hackafourcut",
         "date": (new Date().toISOString().split("T")[0]).replaceAll("-", ". "),
         "owner": "eemune"
     }
@@ -54,6 +54,7 @@ export default function PhotoStudio(): React.ReactElement {
     const fetch_event_data = (_eventID: string) => {
         fetch(GET_EVENT_DATA_API)
             .then((res) => {
+                console.log(res);
                 return res.json()
             })
             .then((data) => {
