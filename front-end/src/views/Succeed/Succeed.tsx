@@ -13,9 +13,13 @@ export default function Succeed(): React.ReactElement {
     const handle_download_btn = () => {
         saveAs(location.state.image, "Happics.png");
     }
+
+    const handle_logo_click = ()=>{
+        navigate("/" + location.state.eventID);
+    }
     return (
         <div className="page_succeed">
-            <TopNav />
+            <TopNav handle_logo_click = {handle_logo_click} />
             <div className="wrap_photo_restart_btn" onClick={() => { handle_restart_btn() }}>
                 <div className="container_photo_card">
                     <img src={URL.createObjectURL(location.state.image)} />

@@ -19,7 +19,7 @@ export default function MakePhotoCard(eventInfo: MakePhotoCardProps): React.Reac
     const [is_facingMode_user, setIsFacingmodeUser] = useState<boolean>(false);
     const webcamRef: any = useRef<any>(null);
 
-    const turn_off_cam = () => { setRunningCamIdx(-1); }
+    const turn_off_cam = () => { setRunningCamIdx(-1);  }
 
     const handle_back_btn = () => {
         turn_off_cam();
@@ -114,7 +114,7 @@ export default function MakePhotoCard(eventInfo: MakePhotoCardProps): React.Reac
                         }
                     </div>
                     <div className="container_QR">
-                        <QRCode value={`${process.env.REACT_APP_WEB_HREF}/${eventID}`} size={45} />
+                        <QRCode value={`${process.env.REACT_APP_WEB_HREF}/${eventID}`} size={3*16} className={"qrcode"}/>
                     </div>
                 </div>
             </div>

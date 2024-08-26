@@ -406,16 +406,21 @@
         }
 
         .container_QR {
-            background-color: white;
-            padding: 4px;
-            position: absolute;
-            overflow: hidden;
+            background-color: #FFF;
+            $qr_padding: 4px;
+            width: calc(3rem + $qr_padding * 2);
+            height: calc(3rem + $qr_padding * 2);
             border-radius: 0.25rem;
             border: 1px solid #C2C6D0;
+            position: absolute;
             right: 0.25rem;
             bottom: 0.5rem;
-            width: fit-content;
-            height: fit-content;
+            .qrcode{
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
         }
     }
 
