@@ -49,7 +49,6 @@
             background-color: #E0ECFD;
             position: relative;
             border-style: wave-top;
-            margin: 1px;
 
             //photocard theme: pink
             &.pink {
@@ -237,7 +236,9 @@
                 overflow: hidden;
 
                 .picture {
-                    @include img_container($width: 100%, $height: 100%);
+                    @include img_container($width: 10rem, $height: 12rem);
+                    object-fit: cover;
+                    
                 }
 
                 .capture_btn {

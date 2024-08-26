@@ -74,7 +74,7 @@ export default function PhotoStudio(): React.ReactElement {
     }
 
     const get_blob_from_canvas = async (_dom_element:HTMLElement) => {
-        const canvas = await html2canvas(_dom_element, { scale: 3 });
+        const canvas = await html2canvas(_dom_element, { scale: 3, backgroundColor:null});
     
         return new Promise<Blob | null>((resolve) => {
             canvas.toBlob((_blob) => {
