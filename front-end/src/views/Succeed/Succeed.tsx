@@ -18,7 +18,7 @@ export default function Succeed(): React.ReactElement {
             <TopNav />
             <div className="wrap_photo_restart_btn" onClick={() => { handle_restart_btn() }}>
                 <div className="container_photo_card">
-                    <img src={location.state.image} />
+                    <img src={URL.createObjectURL(location.state.image)} />
                 </div>
                 <div className="btn_restart">
                     <span className={"material-icons icon"}>replay</span>
