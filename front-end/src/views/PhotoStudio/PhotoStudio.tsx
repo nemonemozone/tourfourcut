@@ -8,6 +8,7 @@ import Loading from "../Loading/Loading";
 import { useParams } from "react-router-dom";
 import 'doodle.css/doodle.css'
 import { eventInfo, theme, photo_list } from "../../types/eventInfo";
+import { toPng } from "html-to-image";
 
 
 
@@ -75,29 +76,23 @@ export default function PhotoStudio(): React.ReactElement {
             return !(node instanceof HTMLElement && node.classList.contains(cam_btn_class_name));
         };
 
-        const blob = domtoimage
-            .toBlob(card!, {
-                filter: filter,
-                width: card!.clientWidth * photo_scale,
-                height: card!.clientHeight * photo_scale,
-                style: {
-                    transform: `scale(${photo_scale})`,
-                    transformOrigin: 'top left'
-                }
-            })
-            .then((_blob) => {
-                const PHOTO_API = `${process.env.REACT_APP_API}/files/photo_card/${eventID}`;
-                const file = new File([_blob], 'image.png', {
-                    type: _blob.type,
-                });
-                const post_res = post_photos([file], PHOTO_API);
-
-                return _blob;
+        const dataURL = toPng(card!, {cacheBust:false, filter:filter,
+            width: card!.clientWidth * photo_scale,
+            height: card!.clientHeight * photo_scale,
+            style: {
+                transform: `scale(${photo_scale})`,
+                transformOrigin: 'top left'
+            }})
+        .then((_dataURL)=>{
+            const PHOTO_API = `${process.env.REACT_APP_API}/files/photo_card/${eventID}`;
+            const file = new File([_dataURL], 'image.png', {
+                type:"image/png",
             });
+            const post_res = post_photos([file], PHOTO_API);
+            return _dataURL;
+        })
 
-
-
-        return blob;
+        return dataURL;
     }
 
     const base64_to_file_obj = (dataurl: string, filename: string): File => {
