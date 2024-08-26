@@ -10,12 +10,11 @@ interface MakePhotoCardProps {
     theme: "blue" | "pink" | "yellow" | "white";
     change_photo: (_idx: number, _newSrc: string) => void;
     photo_render_ref: any;
-    render_sub_ref: any;
     eventID: string | undefined;
 }
 
 export default function MakePhotoCard(eventInfo: MakePhotoCardProps): React.ReactElement {
-    const { title, date, photo_list, logo_list, theme, change_photo, photo_render_ref, render_sub_ref, eventID } = eventInfo;
+    const { title, date, photo_list, logo_list, theme, change_photo, photo_render_ref, eventID } = eventInfo;
     const [running_cam_idx, setRunningCamIdx] = useState<number>(-1);
     const [is_facingMode_user, setIsFacingmodeUser] = useState<boolean>(false);
     const webcamRef: any = useRef<any>(null);
@@ -57,7 +56,7 @@ export default function MakePhotoCard(eventInfo: MakePhotoCardProps): React.Reac
                                 {photo_src && <div className="picture">
                                     <img src={photo_src} />
                                 </div>}
-                                <div className={`capture_btn ${photo_src && "got_photo"}`} onClick={() => { handle_cam_btn(idx); }} ref={render_sub_ref}>
+                                <div className={`capture_btn ${photo_src && "got_photo"}`} onClick={() => { handle_cam_btn(idx); }} data-html2canvas-ignore="true">
                                     <span className="material-icons icon">camera_enhance</span>
                                 </div>
                                 {running_cam_idx == idx &&

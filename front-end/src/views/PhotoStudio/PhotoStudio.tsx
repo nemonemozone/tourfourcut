@@ -8,7 +8,7 @@ import Loading from "../Loading/Loading";
 import { useParams } from "react-router-dom";
 import 'doodle.css/doodle.css'
 import { eventInfo, theme, photo_list } from "../../types/eventInfo";
-import { toPng } from "html-to-image";
+import html2canvas from "html2canvas";
 
 
 
@@ -28,7 +28,6 @@ export default function PhotoStudio(): React.ReactElement {
     const GET_EVENT_DATA_API = `${process.env.REACT_APP_API}/eventInfo/${eventID}`;
     const LOGO_API = `${process.env.REACT_APP_API}/files/logo/${eventID}`;
     const renderPhotoRef = useRef<HTMLDivElement>(null);
-    const renderSubRef = useRef();
 
     useEffect(() => {
         try {
@@ -47,7 +46,6 @@ export default function PhotoStudio(): React.ReactElement {
                 setLogoSrcList(JSON.parse(_body));
             })
             .catch((_e) => {
-                console.log(_e);
                 setLogoSrcList([]);
             })
     }
@@ -55,45 +53,39 @@ export default function PhotoStudio(): React.ReactElement {
     const fetch_event_data = (_eventID: string) => {
         fetch(GET_EVENT_DATA_API)
             .then((res) => {
-                console.log(res);
                 return res.json()
             })
             .then((data) => {
-                console.log(data);
-                console.log("GOGOGOGO");
-                console.log(data.body)
                 setEventData(JSON.parse(data.body)[0]);
             })
             .catch((error) => { console.log(error); });
     }
 
-    const render_photo = () => {
+    const render_photo = async () => {
         const card = renderPhotoRef.current;
-        const cam_btn_class_name = "capture_btn";
-        const photo_scale = 3;
 
-        const filter = (node: Node) => {
-            return !(node instanceof HTMLElement && node.classList.contains(cam_btn_class_name));
-        };
-
-        const dataURL = toPng(card!, {cacheBust:false, filter:filter,
-            width: card!.clientWidth * photo_scale,
-            height: card!.clientHeight * photo_scale,
-            style: {
-                transform: `scale(${photo_scale})`,
-                transformOrigin: 'top left'
-            }})
-        .then((_dataURL)=>{
-            const PHOTO_API = `${process.env.REACT_APP_API}/files/photo_card/${eventID}`;
-            const file = new File([_dataURL], 'image.png', {
-                type:"image/png",
-            });
-            const post_res = post_photos([file], PHOTO_API);
-            return _dataURL;
-        })
-
-        return dataURL;
+        const blob = await get_blob_from_canvas(card!);
+        const PHOTO_API = `${process.env.REACT_APP_API}/files/photo_card/${eventID}`;
+        const file = new File([blob!], 'image.png', {
+            type:"image/png",
+        });
+        const post_res = post_photos([file], PHOTO_API);
+        return blob;
     }
+
+    const get_blob_from_canvas = async (_dom_element:HTMLElement) => {
+        const canvas = await html2canvas(_dom_element, { scale: 3 });
+    
+        return new Promise<Blob | null>((resolve) => {
+            canvas.toBlob((_blob) => {
+                if (_blob !== null) {
+                    resolve(_blob);
+                } else {
+                    resolve(null);
+                }
+            }, "image/png");
+        });
+    };
 
     const base64_to_file_obj = (dataurl: string, filename: string): File => {
         const arr = dataurl.split(',');
@@ -147,7 +139,6 @@ export default function PhotoStudio(): React.ReactElement {
                     theme={selectedTheme}
                     change_photo={change_photo}
                     photo_render_ref={renderPhotoRef}
-                    render_sub_ref={renderSubRef}
                     eventID={eventID}
                 />
                 <ThemePalette selectedTheme={selectedTheme} changeSelectedTheme={setSelectedTheme} />
