@@ -14,6 +14,6 @@
 
     .description {
         margin-top: 0.5rem;
-        @include theme_font($size: 1.5rem, $color: $blue, $style: "lined");
+        @include theme_font($size: 1.5rem, $color: $blue);
     }
 }
