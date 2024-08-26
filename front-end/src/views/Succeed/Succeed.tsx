@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import TopNav from "./components/TopNav";
 import "./Succeed.scss";
 import { saveAs } from "file-saver";
+import Loading from "../Loading/Loading";
 
 export default function Succeed(): React.ReactElement {
     const location = useLocation();
     const navigate = useNavigate();
+    const [is_loading, setIsLoading] = useState(true);
+    useEffect(()=>{
+        location.state.eventID&&setIsLoading(false);
+    })
     const handle_restart_btn = () => {
         navigate("/" + location.state.eventID);
     }
@@ -18,6 +23,8 @@ export default function Succeed(): React.ReactElement {
         navigate("/" + location.state.eventID);
     }
     return (
+        is_loading?
+        <Loading/>:
         <div className="page_succeed">
             <TopNav handle_logo_click = {handle_logo_click} />
             <div className="wrap_photo_restart_btn" onClick={() => { handle_restart_btn() }}>
