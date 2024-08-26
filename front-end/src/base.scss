@@ -29,9 +29,45 @@ $white: #FFFFFF;
     font-style: normal;
 }
 
+//font faces - gmarket sans
+@font-face {
+    font-family: 'GmarketSans';
+    font-weight: 300;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansLight.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansLight.eot?#iefix') format('embedded-opentype'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansLight.woff2') format('woff2'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansLight.woff') format('woff'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansLight.ttf') format("truetype");
+    font-display: swap;
+} 
+@font-face {
+    font-family: 'GmarketSans';
+    font-weight: 500;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansMedium.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansMedium.eot?#iefix') format('embedded-opentype'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansMedium.woff2') format('woff2'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansMedium.woff') format('woff'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansMedium.ttf') format("truetype");
+    font-display: swap;
+} 
+@font-face {
+    font-family: 'GmarketSans';
+    font-weight: 700;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.eot?#iefix') format('embedded-opentype'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.woff2') format('woff2'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.woff') format('woff'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.ttf') format("truetype");
+    font-display: swap;
+} 
+
 //font - theme font(jejudoldam)
 @mixin theme_font($size: "default", $color: $black, $style: "") {
-    font-family: 'EF_jejudoldam';
+    font-family: 'GmarketSans';
+    font-weight: 500;
     letter-spacing: -0.05rem;
     line-height: 150%;
     color: $color;
@@ -83,8 +119,8 @@ $white: #FFFFFF;
 
 //font - main font(Ownglyph)
 @mixin main_font($size: "default", $color: $black) {
-    font-family: 'Ownglyph_UNZ-Rg';
-    line-height: 120%;
+    font-family: 'pretendard';
+    line-height: 150%;
     color: $color;
 
     //font size huge(2.5rem)
@@ -99,12 +135,12 @@ $white: #FFFFFF;
 
     //font size default(1.5rem)
     @if($size =="default") {
-        font-size: 1.25rem;
+        font-size: 1rem;
     }
 
     //font size small(1rem)
     @if($size =="small") {
-        font-size: 1rem;
+        font-size: 0.875rem;
     }
 }
 

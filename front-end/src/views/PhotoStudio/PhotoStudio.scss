@@ -56,7 +56,7 @@
                 background-color: #FFE9ED;
 
                 .title {
-                    @include theme_font($size: "large", $color: $pink, $style: "lined");
+                    @include theme_font($size: "large", $color: $pink);
                 }
 
                 .date {
@@ -94,7 +94,7 @@
                 background-color: $yellow;
 
                 .title {
-                    @include theme_font($size: "large", $color: $navy, $style: "lined");
+                    @include theme_font($size: "large", $color: $navy);
                 }
                 .date {
                     @include main_font($size: "small", $color: $navy);
@@ -133,7 +133,7 @@
                 background-color: #E0ECFD;
 
                 .title {
-                    @include theme_font($size: "large", $color: $blue, $style: "lined");
+                    @include theme_font($size: "large", $color: $blue);
                 }
                 
 
@@ -167,7 +167,7 @@
                 background-color: $white;
 
                 .title {
-                    @include theme_font($size: "large", $color: $navy, $style: "lined");
+                    @include theme_font($size: "large", $color: $navy);
                 }
 
                 .date {
@@ -203,9 +203,12 @@
         .wrap_title_date {
             text-align: center;
             padding: 0.25rem;
-
+            
             .title {
-                @include theme_font($size: "large", $color: $blue, $style: "lined");
+                @include theme_font($size: "large", $color: $blue);
+                line-height: 200%;
+                line-height: 100%;
+                margin-bottom: -0.25rem;
             }
 
             .date {
@@ -393,6 +396,8 @@
             box-sizing: border-box;
             column-gap: 0.5rem;
             align-items: center;
+            position: absolute;
+            bottom: 0;
 
             .container_logo {
                 background-color: #FFFFFF;
