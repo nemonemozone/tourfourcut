@@ -5,16 +5,16 @@ import Loading from "../Loading/Loading";
 import { useNavigate } from "react-router-dom";
 
 export default function EventList(): React.ReactElement {
-    const userID = "bjking";
+    const userID = "Bj_king";
     const href_event = `${process.env.REACT_APP_WEB_HREF}/${userID}`;
     const [event_list, setEventList] = useState<eventInfo[] | null>();
     const EVENT_INFO_API = `${process.env.REACT_APP_API}/user/event/${userID}`
     const navigate = useNavigate();
     const get_event_list = async (_userID: string) => {
         fetch(EVENT_INFO_API)
-            .then((_res) => _res.json()
+            .then((_res) => { console.log(_res); return _res.json() }
             )
-            .then((_json) => setEventList(JSON.parse(_json.body)));
+            .then((_json) => { console.log(_json); setEventList(JSON.parse(_json.body)) });
     }
     const handle_navigate_new_event = () => {
         navigate("/admin/newEvent");

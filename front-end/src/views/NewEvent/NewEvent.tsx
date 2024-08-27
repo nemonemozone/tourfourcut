@@ -11,7 +11,7 @@ export default function NewEvent(): React.ReactElement {
     const EVENT_DATA_API = `${process.env.REACT_APP_API}/eventInfo`;
     const navigate = useNavigate();
     const [logo_list, setLogoList] = useState<File[]>([]);
-    const userID = "bjking";
+    const userID = "Bj_king";
 
     const post_new_event = async (_title: string, _dateStart: string, _dateEnd: string, _ownerID: string) => {
         console.log(_ownerID);
