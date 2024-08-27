@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./NewEvent.scss";
 
 export default function NewEvent(): React.ReactElement {
     const date = new Date();
@@ -12,16 +13,16 @@ export default function NewEvent(): React.ReactElement {
     const [logo_list, setLogoList] = useState<File[]>([]);
     const userID = "bjking";
 
-    const post_new_event = async (_title: string, _dateStart: string, _dateEnd: string, _ownerID:string) => {
+    const post_new_event = async (_title: string, _dateStart: string, _dateEnd: string, _ownerID: string) => {
         console.log(_ownerID);
         const date = _dateStart == _dateEnd ? (_dateStart).replaceAll("-", ". ") : (`${_dateStart}~${_dateEnd}`).replaceAll("-", ". ")
         const post_event_res = await fetch(EVENT_DATA_API, {
             method: "POST",
             body: JSON.stringify({
-                Method: "POST", name: _title, date: date, owner:_ownerID
+                Method: "POST", name: _title, date: date, owner: _ownerID
             }),
         })
-            .then((response) =>response.json())
+            .then((response) => response.json())
             .then((_json) => JSON.parse(_json.body))
         return post_event_res;
     }
@@ -113,13 +114,13 @@ export default function NewEvent(): React.ReactElement {
                     />
                 </div>
                 <input type="file" accept="image/png,image/jpg" multiple onChange={(event) => inputTheImage(event)} />
-                <button type="button" onClick={handle_reset_btn}>이미지 목록 리셋</button>
+                <button type="button" className="btn_reset_imgs" onClick={handle_reset_btn}>이미지 목록 리셋</button>
                 {
                     logo_list.map((_logo_obj, index) => (
                         <img key={index} src={URL.createObjectURL(_logo_obj)} alt={"logo" + index} />
                     ))
                 }
-                <button type="submit">변경사항 저장</button>
+                <button type="submit" className="btn_submit">변경사항 저장</button>
             </form>
         </div>
     );

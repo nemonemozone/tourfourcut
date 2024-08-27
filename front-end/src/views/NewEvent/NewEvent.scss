@@ -1,0 +1,8 @@
+@import "../../base.scss";
+
+.page_new_event {
+    .btn_reset_imgs {
+        @include button($style: "lined");
+        margin-bottom: 1rem;
+    }
+}
