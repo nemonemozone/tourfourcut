@@ -3,7 +3,7 @@ name: Front Deployment
 on:
   push:
     branches:
-      - main  # develop 브랜치로 변경
+      - deploy
 
 jobs:
   build:
