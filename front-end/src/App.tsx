@@ -1,5 +1,6 @@
 import React from "react";
 import "./base.scss";
+import "./output.css";
 import PhotoStudio from "./views/PhotoStudio/PhotoStudio";
 import Succeed from "./views/Succeed/Succeed";
 import "./App.css";

@@ -68,7 +68,7 @@ export default function Home(): React.ReactElement {
                         <span className="material-icons">my_location</span>
                         <p>내 주변 투어네컷</p>
                     </div>
-                    <p className="locationName">{myAddress}</p>
+                    <p className="font-bold text-2xl pt-2">{myAddress}</p>
                 </div>
                 <div className="comp_location_list">
                     {locationListInfo.map((_location) => (
