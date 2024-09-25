@@ -39,6 +39,17 @@
         justify-content: center;
         $card_width: 21rem;
         $card_height: 31rem;
+        position: relative;
+        
+        .wrap_title_date {
+            z-index: 100;
+            .title {
+                z-index: -1;
+            }
+            .date {
+                z-index: -1;
+            }
+        }
 
         .comp_card {
             overflow: hidden;
@@ -48,9 +59,13 @@
             border: 1px solid $blue;
             background-color: #E0ECFD;
             position: relative;
-            border-style: wave-top;
 
-            //photocard theme: pink
+            .background_img {
+                position: absolute;
+                -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0)));
+                mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+            }
+
             &.pink {
                 border: 1px solid $pink;
                 background-color: #FFE9ED;
@@ -96,6 +111,7 @@
                 .title {
                     @include theme_font($size: "large", $color: $navy);
                 }
+
                 .date {
                     @include main_font($size: "small", $color: $navy);
                     letter-spacing: -0.5px;
@@ -135,7 +151,7 @@
                 .title {
                     @include theme_font($size: "large", $color: $blue);
                 }
-                
+
 
                 .wrap_picture_captureBtn {
                     border: 1px solid $blue;
@@ -203,7 +219,7 @@
         .wrap_title_date {
             text-align: center;
             padding: 0.25rem;
-            
+
             .title {
                 @include theme_font($size: "large", $color: $blue);
                 line-height: 200%;
@@ -241,7 +257,7 @@
                 .picture {
                     @include img_container($width: 10rem, $height: 12rem);
                     object-fit: cover;
-                    
+
                 }
 
                 .capture_btn {
@@ -390,7 +406,7 @@
             display: flex;
             width: $card_width;
             height: 2rem;
-            background-color: #FFFFFF;
+            background-color: #ffffffe0;
             border-top: 1px solid $pink;
             padding: 0 1rem;
             box-sizing: border-box;
@@ -401,7 +417,7 @@
 
             .container_logo {
                 background-color: #FFFFFF;
-                @include img_container($width: 1.5rem, $height: 1.5rem);
+                @include img_container($height: 1.3rem);
             }
         }
 

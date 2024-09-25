@@ -13,55 +13,21 @@ import html2canvas from "html2canvas";
 
 
 export default function PhotoStudio(): React.ReactElement {
+    const location = useLocation();
     const mock_data = {
-        "ID": "default",
-        "name": "Hackafourcut",
+        "ID": "tourfourcut",
+        "name": location.state.title,
         "date": (new Date().toISOString().split("T")[0]).replaceAll("-", ". "),
         "owner": "eemune"
     }
     const [eventInfo, setEventData] = useState<eventInfo | null>(mock_data);
     const [selectedTheme, setSelectedTheme] = useState<theme>("blue");
     const [photo_list, setPhotoList] = useState<photo_list>(["", "", "", ""]);
-    const [logo_src_list, setLogoSrcList] = useState<string[]>();
+    // const [logo_src_list, setLogoSrcList] = useState<string[]>();
+    const logo_src_list: string[] = ["/tour.png", "/kakao.png"];
     const params = useParams();
     const eventID = params.eventID;
-    const GET_EVENT_DATA_API = `${process.env.REACT_APP_API}/eventInfo/${eventID}`;
-    const LOGO_API = `${process.env.REACT_APP_API}/files/logo/${eventID}`;
     const renderPhotoRef = useRef<HTMLDivElement>(null);
-    const location = useLocation();
-
-
-    useEffect(() => {
-        try {
-            fetch_event_data(eventID!);
-            fetch_logo_img_src(eventID!);
-        }
-        catch {
-            setEventData(mock_data);
-        }
-    }, []);
-
-    const fetch_logo_img_src = (_eventID: string) => {
-        fetch(LOGO_API)
-            .then((_res) => _res.json())
-            .then((_body) => {
-                setLogoSrcList(JSON.parse(_body));
-            })
-            .catch((_e) => {
-                setLogoSrcList([]);
-            })
-    }
-
-    const fetch_event_data = (_eventID: string) => {
-        fetch(GET_EVENT_DATA_API)
-            .then((res) => {
-                return res.json()
-            })
-            .then((data) => {
-                setEventData(JSON.parse(data.body)[0]);
-            })
-            .catch((error) => { console.log(error); });
-    }
 
     const render_photo = async () => {
         const card = renderPhotoRef.current;
@@ -141,7 +107,7 @@ export default function PhotoStudio(): React.ReactElement {
                     theme={selectedTheme}
                     change_photo={change_photo}
                     photo_render_ref={renderPhotoRef}
-                    eventID={eventID}
+                    background_image_src={location.state.img_src}
                 />
                 <ThemePalette selectedTheme={selectedTheme} changeSelectedTheme={setSelectedTheme} />
             </div>
