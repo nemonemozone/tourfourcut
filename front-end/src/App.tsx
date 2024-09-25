@@ -11,6 +11,8 @@ import UploadLogo from "./views/UploadLogo/UploadLogo";
 import Gallary from "./views/Gallary/Gallary";
 import EventList from "./views/EventList/EventList";
 import EventInfo from "./views/EventInfo/EventInfo";
+import Home from "./views/Home/Home";
+import LocationTheme from "./views/LocationTheme/LocationTheme";
 
 function App() {
   return (
@@ -18,7 +20,8 @@ function App() {
       <header className="App-header">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<PhotoStudio />}></Route>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/location/:locationID" element={<LocationTheme />}></Route>
             <Route path="/:eventID" element={<PhotoStudio />} />
             <Route path="/succeed" element={<Succeed />}></Route>
             <Route path="/admin" element={<EventList/>}/>
