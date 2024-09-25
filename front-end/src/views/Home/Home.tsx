@@ -3,6 +3,7 @@ import Loading from "../Loading/Loading";
 import TopNav from "../PhotoStudio/components/TopNav";
 import { useNavigate } from "react-router-dom";
 import Location from "../../types/location";
+import "./Home.scss";
 
 
 export default function Home(): React.ReactElement {
@@ -19,7 +20,7 @@ export default function Home(): React.ReactElement {
         setMyAddress(address);
         setMyLocation(location);
         return location;
-        }
+    }
 
     const fetch_location_list_info = (my_location: string) => {
         //내 위치로부터 3km 반경 내에 있는 관광지들의 정보를 불러옵니다.
@@ -71,9 +72,9 @@ export default function Home(): React.ReactElement {
                 </div>
                 <div className="comp_location_list">
                     {locationListInfo.map((_location) => (
-                        <div 
-                            className="comp_location" 
-                            onClick={() => handle_location_clicked(_location.location_ID)} 
+                        <div
+                            className="comp_location"
+                            onClick={() => handle_location_clicked(_location.location_ID)}
                             key={_location.location_ID}
                         >
                             <div className="image_container">
@@ -81,10 +82,10 @@ export default function Home(): React.ReactElement {
                             </div>
                             <div className="wrap_texts">
                                 <div className="wrap_icon_title">
-                                <span className="material-icons">near_me</span>
-                                    <p>{_location.distance}</p>
+                                    <span className="material-icons">near_me</span>
+                                    <p className="distance">{_location.distance}</p>
                                 </div>
-                                <p>{_location.title}</p>
+                                <p className="location_title">{_location.title}</p>
                             </div>
                         </div>
                     ))}
