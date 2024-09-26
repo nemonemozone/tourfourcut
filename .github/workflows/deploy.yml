@@ -16,11 +16,11 @@ jobs:
 
       - name: Install Dependencies # 의존 파일 설치
         working-directory: ./front-end
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Build # React Build
         working-directory: ./front-end
-        run: yarn build
+        run: npm run build
         env:
           CI: ""
 
