@@ -5,7 +5,7 @@ on: # Event 감지
       - deploy # 해당 브랜치의 푸쉬가 일어날 때 CI/CD를 진행하겠다는 뜻
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Change directory to frontend
         run: cd front-end
