@@ -21,9 +21,13 @@ jobs:
       - name: install ci plugin
         run: npm install --save-dev @babel/plugin-proposal-private-property-in-object
         working-directory: ./front-end
+
+      - name: Install Doodle.css
+        run: npm install --save-dev doodle.css
+        working-directory: ./front-end
       
       # ENV 옮기기 작업 필요
-      
+
       - name: Build # React Build
         working-directory: ./front-end
         run: |
