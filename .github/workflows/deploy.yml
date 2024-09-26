@@ -14,15 +14,21 @@ jobs:
         working-directory: ./front-end
         run: node -v
 
-      - name: Install Dependencies # 의존 파일 설치
+      - name: Install npm dependencies
+        run: npm install
         working-directory: ./front-end
-        run: npm ci
 
+      - name: install ci plugin
+        run: npm install --save-dev @babel/plugin-proposal-private-property-in-object
+        working-directory: ./front-end
+      
+      # ENV 옮기기 작업 필요
+      
       - name: Build # React Build
         working-directory: ./front-end
-        run: npm run build
-        env:
-          CI: ""
+        run: |
+          unset CI
+          npm run build
 
       - name: zip create
         # zip 파일을 만듭니다(파일명은 자유, 대신 아래 workflow에 적을 파일명과 동일하게 맞춰주세요).
