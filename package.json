@@ -12,6 +12,7 @@
     "doodle": "^0.1.10",
     "doodle.css": "^0.0.2",
     "file-saver": "^2.0.5",
+    "html2canvas": "^1.4.1",
     "react-copy-to-clipboard": "^5.1.0",
     "react-qr-code": "^2.0.15",
     "react-router-dom": "^6.25.1",
