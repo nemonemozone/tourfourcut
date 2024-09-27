@@ -1,4 +1,4 @@
-name: Deploy # Workflow 이름
+name: TourFourCut Frontend Deploy # Workflow 이름
 on: # Event 감지
   push:
     branches:
@@ -8,7 +8,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code. # Repo checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+      
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: echo "dir=$(npm config get cache)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ env.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Check Node v # Node v 확인
         working-directory: ./front-end
