@@ -19,6 +19,14 @@ jobs:
       - name: Install Dependencies # 의존 파일 설치
         run: yarn install --frozen-lockfile
 
+      - name: copying react .env files
+        env:
+          API: ${{ secrets.REACT_APP_API }}
+          S3: ${{ secrets.REACT_APP_S3 }}
+          WEB_HREF: ${{ secrets.REACT_APP_WEB_HREF }}
+        run: echo -e "REACT_APP_API = $API \n REACT_APP_S3 = $S3 \n REACT_APP_WEB_HREF = $WEB_HREF" >> .env
+        working-directory: ./front-end
+
       - name: Build # React Build
         run: yarn build
         env:
