@@ -82,7 +82,7 @@ export default function Home(): React.ReactElement {
     );
 }
 
-function DinnerCard({ location }) {
+function DinnerCard({ location }: { location: Location }) {
     const navigate = useNavigate();
 
     const handle_location_clicked = (locationID: string) => {
