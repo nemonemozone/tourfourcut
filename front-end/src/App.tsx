@@ -22,7 +22,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />}></Route>
-            <Route path="/location/:locationID" element={<LocationTheme />}></Route>
+            <Route path="/location/:locationName" element={<LocationTheme />}></Route>
             <Route path="/takePhoto/:eventID" element={<PhotoStudio />} />
             <Route path="/succeed" element={<Succeed />}></Route>
             <Route path="/admin" element={<EventList />} />
