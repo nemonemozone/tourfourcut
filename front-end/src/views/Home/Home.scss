@@ -1,8 +1,13 @@
 @import "../../base.scss";
 .page_home {
+  .comp_top_nav{
+    position: fixed;
+    z-index: 100;
+  }
   .layout {
     padding: 19px 24px 0 24px;
     padding-bottom: 5rem;
+    padding-top: 5rem;
   }
 
   .comp_location {

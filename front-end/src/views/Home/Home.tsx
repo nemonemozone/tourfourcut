@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Loading from "../Loading/Loading";
-import TopNav from "../PhotoStudio/components/TopNav";
+import TopNav from "./components/TopNav";
 import { useNavigate } from "react-router-dom";
 import Location from "../../types/location";
 import "./Home.scss";
