@@ -86,18 +86,18 @@ export default function Home(): React.ReactElement {
             })
             .then(response => response.json())
             .then((data: ApiResponse) => {
-            const items = data.response.body.items.item;
-            items.forEach(item => {
-                if (item.firstimage) {
-                    const distance = parseFloat(item.dist) / 1000;
-                    const distance_str = distance.toFixed(1) + "km";
-                    resTourSpotList.push({
-                        location_ID: item.contentid,
-                        title: item.title,
-                        distance: distance_str,
-                        img_url: item.firstimage
-                });
-            }
+                const items = data.response.body.items.item;
+                items.forEach(item => {
+                    if (item.firstimage) {
+                        const distance = parseFloat(item.dist) / 1000;
+                        const distance_str = distance.toFixed(1) + "km";
+                        resTourSpotList.push({
+                            location_ID: item.contentid,
+                            title: item.title,
+                            distance: distance_str,
+                            img_url: item.firstimage
+                        });
+                    }
             });
         })
         
@@ -135,15 +135,19 @@ export default function Home(): React.ReactElement {
 function DinnerCard({ location }: { location: Location }) {
     const navigate = useNavigate();
 
-    const handle_location_clicked = (locationID: string) => {
-        navigate(`/location/${locationID}`);
+    const handle_location_clicked = (contentid: string) => {
+        navigate(`/location/${contentid}`);
     };
 
     return (
         <>
             <div
                 className="comp_location"
-                onClick={() => handle_location_clicked(location.location_ID)}
+                onClick={() => {
+                    localStorage.setItem("location_ID", location.location_ID);
+                    localStorage.setItem("title", location.title);
+                    handle_location_clicked(location.location_ID);
+                }}
                 key={location.location_ID}
             >
                 <img
