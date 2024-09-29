@@ -1,7 +1,8 @@
+@import "../../base.scss";
 .page_home {
-
   .layout {
     padding: 19px 24px 0 24px;
+    padding-bottom: 5rem;
   }
 
   .comp_location {
@@ -11,7 +12,16 @@
     border-radius: 10px;
     opacity: 0px;
     padding: 8px;
+    &:hover{
+      border: 1px solid $pink;
+      cursor: pointer;
+      filter: brightness(1.1);
+    }
 
+    img{
+      border-radius: 8px;
+      border: 1px solid #C7C7C7;
+    }
   }
 
   .distance {
