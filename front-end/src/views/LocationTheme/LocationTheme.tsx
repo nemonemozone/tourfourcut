@@ -10,10 +10,23 @@ import "swiper/css";
 // import required modules
 import { EffectCoverflow, Pagination } from "swiper/modules";
 
+interface ApiResponse {
+    response: {
+      body: {
+        items: {
+          item: Array<{
+            galWebImageUrl: string;
+            [key: string]: any;
+          }>;
+        };
+      };
+    };
+}
+
 export default function LocationTheme(): React.ReactElement {
     const params = useParams();
     const navigate = useNavigate();
-    const locationID: string | undefined = params.locationID;
+    const locationName: string | undefined = params.locationName;
     const [locationTitle, setLocationTitle] = useState<string | undefined>("");
     const [locationDescription, setLocationDescription] = useState<
         string | undefined
@@ -23,21 +36,36 @@ export default function LocationTheme(): React.ReactElement {
     >();
     const [selectedPhoto, setSelectedPhoto] = useState(0);
 
-    const fetch_location_title_description = (_locationID: string) => {
+    const fetch_location_title_description = (_locationName: string) => {
         //선택한 장소의 이름과 해당 장소에 대한 설명을 불러옵니다.
-        setLocationTitle("암사동 선사유적지"); //목업 데이터
+        setLocationTitle(_locationName);
         setLocationDescription(
             "익선동은 골목과 한옥이 어우러져 아름다운 매력을 풍기는 곳으로, 남녀노소 많은 관광객들이 찾는 핫플레이스로 떠오르고 있다.",
         ); //목업 데이터
     };
-    const fetch_location_img_src = (_locationID: string) => {
+    const fetch_location_img_src = async (_locationName: string) => {
         //선택한 장소의 사진 데이터를 불러옵니다.
-        setLocationPhotoSrcList([
-            "https://i.namu.wiki/i/iA783ETgY2QA1xjoY6Fg0oTQ7-lM3Gs-lpfiseY6PA7YvOl16nZakcsngWRKwS5uW5Fda5UprAyE8FzuevQAZQ.webp",
-            "http://tong.visitkorea.or.kr/cms/resource/76/3372876_image2_1.JPG",
-            "http://tong.visitkorea.or.kr/cms/resource/92/3372892_image2_1.JPG",
-            "http://tong.visitkorea.or.kr/cms/resource/21/3372921_image2_1.JPG",
-        ]); //목업 데이터
+        const API_URL = `https://apis.data.go.kr/B551011/PhotoGalleryService1/gallerySearchList1?numOfRows=4&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&arrange=BAC&keyword=${encodeURIComponent(_locationName)}&serviceKey=${process.env.REACT_APP_TOUR_API_KEY}`
+        const resPhotoList: string[] = []
+
+        const res = await fetch(API_URL, {
+            method: "GET"
+        })
+            .then((res) => {
+                console.log(res);
+                return res;
+            })
+            .then(response => response.json())
+            .then((data: ApiResponse) => {
+            const items = data.response.body.items.item;
+            items.forEach(item => {
+                if (item.galWebImageUrl) {
+                resPhotoList.push(item.galWebImageUrl);
+                }
+            });
+        })
+        console.log(resPhotoList);
+        setLocationPhotoSrcList(resPhotoList);
     };
 
     const update_selected_photo = (_new_idx: number) => {
@@ -54,8 +82,9 @@ export default function LocationTheme(): React.ReactElement {
     };
 
     useEffect(() => {
-        fetch_location_img_src(locationID!);
-        fetch_location_title_description(locationID!);
+        console.log(locationName);
+        fetch_location_img_src(locationName!);
+        fetch_location_title_description(locationName!);
     }, []);
 
     return (
@@ -118,3 +147,4 @@ export default function LocationTheme(): React.ReactElement {
         </>
     );
 }
+
