@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 export default function Gallary(): React.ReactElement {
-    const { event_name } = useParams();
+    const event_name = "tourfourcut"
     const GALLARY_API = `${process.env.REACT_APP_API}/files/photo_card/${event_name}`;
     const [pictures64, setPictures64] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);

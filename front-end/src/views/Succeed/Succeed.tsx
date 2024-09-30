@@ -13,14 +13,14 @@ export default function Succeed(): React.ReactElement {
         location.state.eventID&&setIsLoading(false);
     })
     const handle_restart_btn = () => {
-        navigate("/" + location.state.eventID);
+        navigate("/");
     }
     const handle_download_btn = () => {
-        saveAs(location.state.image, "Happics.png");
+        saveAs(location.state.image, "tourfourcut.png");
     }
 
     const handle_logo_click = ()=>{
-        navigate("/" + location.state.eventID);
+        navigate("/" );
     }
     return (
         is_loading?

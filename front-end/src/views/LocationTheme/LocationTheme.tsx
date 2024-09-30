@@ -11,6 +11,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 // import required modules
 import { EffectCoverflow, Pagination } from "swiper/modules";
+import { convertURLtoBase64 } from "../PhotoStudio/components/URLToFileObj";
 
 interface ApiResponseImage {
     response: {
@@ -34,7 +35,6 @@ interface ApiResponseDescription {
             "overview": string;
           }>;
         };
-      };
     };
 }
 
@@ -52,6 +52,7 @@ export default function LocationTheme(): React.ReactElement {
     const [selectedPhoto, setSelectedPhoto] = useState(0);
 
     const fetch_location_title_description = async (_locationID: string) => {
+
         //선택한 장소의 설명을 불러옵니다.
         const API_URL = `https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${_locationID}&defaultYN=Y&firstImageYN=N&areacodeYN=N&catcodeYN=N&addrinfoYN=N&mapinfoYN=N&overviewYN=Y&numOfRows=1&serviceKey=${process.env.REACT_APP_TOUR_API_KEY_ENCODED}`;
         const res = await fetch(API_URL, {
@@ -86,8 +87,8 @@ export default function LocationTheme(): React.ReactElement {
                     if (item.originimgurl) {
                         resPhotoList.push(item.originimgurl);
                     }
-            });
-        })
+                });
+            })
         setLocationPhotoSrcList(resPhotoList);
     };
 
@@ -99,7 +100,7 @@ export default function LocationTheme(): React.ReactElement {
         navigate("/takePhoto/tourfourcut", {
             state: {
                 title: locationTitle,
-                img_src: locationPhotoSrcList![selectedPhoto],
+                img_src: locationPhotoSrcList![selectedPhoto].split("http://tong.visitkorea.or.kr")[1],
             },
         });
     };
@@ -125,8 +126,8 @@ export default function LocationTheme(): React.ReactElement {
                                 {locationDescription}
                             </p>
                         </div>
-                        
-                        
+
+
                         <Swiper
                             effect={"coverflow"}
                             grabCursor={true}
@@ -158,7 +159,7 @@ export default function LocationTheme(): React.ReactElement {
                                             alt={`land scape number${_idx}1`}
                                             src={_img_url}
                                         />
-                                        <div className="button">{`${_idx+1}번 테마 선택`}</div>
+                                        <div className="button">{`${_idx + 1}번 테마 선택`}</div>
                                     </div>
                                 </SwiperSlide>
                             ))}

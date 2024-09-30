@@ -46,12 +46,12 @@ export default function MakePhotoCard(eventInfo: MakePhotoCardProps): React.Reac
         <div className={`comp_make_photo_card`} >
             <div ref={photo_render_ref} >
                 <div className={`comp_card ${theme}`}>
-                    <div className='background_image'>
-                        <img className='background_img' src={background_image_src} />
-                    </div>
                     <div className="wrap_title_date">
                         <p className="title">{title}</p>
                         <p className="date">{date}</p>
+                    </div>
+                    <div className='background_image'>
+                        <img className='background_img' src={background_image_src} />
                     </div>
                     <div className="container_pictures">
                         {photo_list.map((photo_src, idx) =>
@@ -106,9 +106,6 @@ export default function MakePhotoCard(eventInfo: MakePhotoCardProps): React.Reac
                         }
                     </div >
                     <div className="comp_logo_container">
-                        <div className="container_logo">
-                            <img alt="logo image" src={"/LOGO_Happics.svg"} />
-                        </div>
                         {logo_list && logo_list.map((logo_src, key) =>
                             <div key={key} className="container_logo">
                                 <img alt="logo image" src={logo_src} />
