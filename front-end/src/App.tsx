@@ -22,14 +22,10 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />}></Route>
-            <Route path="/location/:locationID" element={<LocationTheme />}></Route>
+            <Route path="/location/:locationName" element={<LocationTheme />}></Route>
             <Route path="/takePhoto/:eventID" element={<PhotoStudio />} />
             <Route path="/succeed" element={<Succeed />}></Route>
-            <Route path="/admin" element={<EventList />} />
-            <Route path="/admin/newEvent" element={<NewEvent />}></Route>
-            <Route path="/admin/logo/:event_name" element={<UploadLogo />}></Route>
-            <Route path="/admin/gallary/:event_name" element={<Gallary />} />
-            <Route path="/admin/:eventID" element={<EventInfo />} />
+            <Route path="/admin" element={<Gallary />} />
           </Routes></BrowserRouter>
       </header>
     </div>

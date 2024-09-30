@@ -1,59 +1,109 @@
 import { useEffect, useState } from "react";
 import Loading from "../Loading/Loading";
-import TopNav from "../PhotoStudio/components/TopNav";
+import TopNav from "./components/TopNav";
 import { useNavigate } from "react-router-dom";
 import Location from "../../types/location";
 import "./Home.scss";
 
+interface Coords {
+    latitude: number;
+    longitude: number;
+}
+
+declare global {
+    interface Window {
+      kakao: any;
+    }
+}
+
+interface ApiResponse {
+    response: {
+      body: {
+        items: {
+          item: Array<{
+            contentid: string;
+            title: string;
+            dist: string;
+            firstimage: string;
+          }>;
+        }
+      };
+    };
+}
+
 export default function Home(): React.ReactElement {
     const [locationListInfo, setLocationListInfo] = useState<Location[]>([]);
-    const [myLocation, setMyLocation] = useState<any>(null);
+    const [myCoords, setMyCoords] = useState<Coords | null>(null);
     const [myAddress, setMyAddress] = useState<string | null>(null);
-
-    const fetch_my_location = () => {
-        //현재 내 위치와 주소를 불러옵니다.
-        const location = "";
-        const address = "인하로 100 인하대학교 하이테크 센터";
-        setMyAddress(address);
-        setMyLocation(location);
-        return location;
-    };
-
-    const fetch_location_list_info = (my_location: string) => {
-        //내 위치로부터 3km 반경 내에 있는 관광지들의 정보를 불러옵니다.
-        const mock_data: Location[] = [
-            {
-                location_ID: "locationID1",
-                title: "익선동 한옥거리",
-                distance: "1.2km",
-                img_url:
-                    "http://tong.visitkorea.or.kr/cms/resource/23/2947523_image2_1.jpg",
-            },
-            {
-                location_ID: "locationID2",
-                title: "경복궁",
-                distance: "2.5km",
-                img_url:
-                    "http://tong.visitkorea.or.kr/cms/resource/23/2947523_image2_1.jpg",
-            },
-            {
-                location_ID: "locationID3",
-                title: "북촌 한옥마을",
-                distance: "1.8km",
-                img_url:
-                    "http://tong.visitkorea.or.kr/cms/resource/23/2947523_image2_1.jpg",
-            },
-        ];
-        setLocationListInfo(mock_data);
-    };
+    
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                setMyCoords({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                });
+            }, (error) => {
+                console.error("Error getting geolocation:", error);
+                setMyAddress("인하로 100 인하대학교 하이테크 센터");
+            });
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+            setMyAddress("인하로 100 인하대학교 하이테크 센터");
+        }
+    }, []);
 
     useEffect(() => {
-        const init = async () => {
-            const my_location = await fetch_my_location();
-            fetch_location_list_info(my_location);
-        };
-        init();
-    }, []);
+        if (myCoords) {
+            const geocoder = new window.kakao.maps.services.Geocoder();
+            geocoder.coord2Address(myCoords.longitude, myCoords.latitude, (result: any, status: any) => {
+                if (status === window.kakao.maps.services.Status.OK) {
+                    setMyAddress(result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name);
+                } else {
+                    console.error("Failed to get address:", status);
+                    setMyAddress("인하로 100 인하대학교 하이테크 센터");
+                }
+            });
+        }
+    }, [myCoords]);
+
+    useEffect(() => {
+        if (myCoords) {
+            fetch_location_list_info(myCoords);
+        }
+    }, [myCoords]);
+
+    const fetch_location_list_info = async (coords: Coords) => {
+        //내 위치로부터 3km 반경 내에 있는 관광지들의 정보를 불러최옵니다.
+        const API_URL = `https://apis.data.go.kr/B551011/KorService1/locationBasedList1?MobileOS=ETC&MobileApp=AppTest&numOfRows=30&_type=json&mapX=${coords.longitude}&mapY=${coords.latitude}&radius=3000&contentTypeId=12&serviceKey=${process.env.REACT_APP_TOUR_API_KEY_ENCODED}`
+        const resTourSpotList: Location[] = []
+        const res = await fetch(API_URL, {
+            method: "GET"
+        })
+            .then((res) => {
+                console.log(res);
+                return res;
+            })
+            .then(response => response.json())
+            .then((data: ApiResponse) => {
+                const items = data.response.body.items.item;
+                items.forEach(item => {
+                    if (item.firstimage) {
+                        const distance = parseFloat(item.dist) / 1000;
+                        const distance_str = distance.toFixed(1) + "km";
+                        resTourSpotList.push({
+                            location_ID: item.contentid,
+                            title: item.title,
+                            distance: distance_str,
+                            img_url: item.firstimage
+                        });
+                    }
+            });
+        })
+        
+        setLocationListInfo(resTourSpotList);
+        console.log(resTourSpotList);
+    };
 
     return locationListInfo.length > 0 ? (
         <div className="page_home">
@@ -85,15 +135,19 @@ export default function Home(): React.ReactElement {
 function DinnerCard({ location }: { location: Location }) {
     const navigate = useNavigate();
 
-    const handle_location_clicked = (locationID: string) => {
-        navigate(`/location/${locationID}`);
+    const handle_location_clicked = (contentid: string) => {
+        navigate(`/location/${contentid}`);
     };
 
     return (
         <>
             <div
                 className="comp_location"
-                onClick={() => handle_location_clicked(location.location_ID)}
+                onClick={() => {
+                    localStorage.setItem("location_ID", location.location_ID);
+                    localStorage.setItem("title", location.title);
+                    handle_location_clicked(location.location_ID);
+                }}
                 key={location.location_ID}
             >
                 <img
