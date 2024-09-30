@@ -13,17 +13,27 @@ import "swiper/css";
 import { EffectCoverflow, Pagination } from "swiper/modules";
 import { convertURLtoBase64 } from "../PhotoStudio/components/URLToFileObj";
 
-interface ApiResponse {
+interface ApiResponseImage {
     response: {
-        body: {
-            items: {
-                item: Array<{
-                    "contentid": string;
-                    "originimgurl": string;
-                    "imgname": string;
-                    "smallimageurl": string;
-                }>;
-            };
+      body: {
+        items: {
+          item: Array<{
+            "contentid": string;
+            "originimgurl": string;
+          }>;
+        };
+      };
+    };
+}
+
+interface ApiResponseDescription {
+    response: {
+      body: {
+        items: {
+          item: Array<{
+            "contentid": string;
+            "overview": string;
+          }>;
         };
     };
 }
@@ -41,62 +51,22 @@ export default function LocationTheme(): React.ReactElement {
     >();
     const [selectedPhoto, setSelectedPhoto] = useState(0);
 
-    const handleInvoke = async (locationName: string) => {
-        // Bedrock 클라이언트 생성
-        const client = new BedrockRuntimeClient({
-            region: "us-east-1",
-            credentials: {
-                accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID!,
-                secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY!,
-            }
-        });
+    const fetch_location_title_description = async (_locationID: string) => {
 
-        // 요청 파라미터 설정
-        const params: InvokeModelCommandInput = {
-            modelId: "anthropic.claude-3-haiku-20240307-v1:0",
-            contentType: "application/json",
-            accept: "application/json",
-            body: JSON.stringify({
-                "anthropic_version": "bedrock-2023-05-31",
-                "max_tokens": 300,
-                "system": "너는 한국의 관광지에 대해서 80자 이내로 사용자에게 답해줘야 해.  <example> <input> 익선동 </input><output>익선동은 골목과 한옥이 어우러져 아름다운 매력을 풍기는 곳으로, 남녀노소 많은 관광객들이 찾는 핫플레이스로 떠오르고 있다.</output></example>",
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": [
-                            {
-                                "type": "text",
-                                "text": locationName + "에 대해서 80자 이내로 설명해줘."
-                            }
-                        ]
-                    }
-                ],
-                temperature: 0.7,
-                top_p: 1,
-            }),
-
-        };
-
-        try {
-            const command = new InvokeModelCommand(params);
-            const data = await client.send(command);
-
-            // 응답 처리
-            if (data.body) {
-                const responseBody = JSON.parse(new TextDecoder().decode(data.body));
-                return responseBody.content[0].text;
-            } else {
-                throw new Error("No response body");
-            }
-        } catch (error) {
-            console.error("Error invoking Bedrock model:", error);
-            return "";
-        }
-    };
-    const fetch_location_title_description = async (_locationTitle: string) => {
         //선택한 장소의 설명을 불러옵니다.
-        const description = await handleInvoke(_locationTitle); // Bedrock 호출
-        setLocationDescription(description);
+        const API_URL = `https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${_locationID}&defaultYN=Y&firstImageYN=N&areacodeYN=N&catcodeYN=N&addrinfoYN=N&mapinfoYN=N&overviewYN=Y&numOfRows=1&serviceKey=${process.env.REACT_APP_TOUR_API_KEY_ENCODED}`;
+        const res = await fetch(API_URL, {
+            method: "GET"
+        })
+            .then(response => response.json())
+            .then((data: ApiResponseDescription) => {
+                const description = data.response.body.items.item[0].overview;
+                // 문자열 중 첫번째 문장만 사용
+                const sentences: string[] = description.split('.');
+                const trimmedSentence = sentences[0].trim();
+                setLocationDescription(trimmedSentence);
+            });
+    
     };
     const fetch_location_img_src = async (_locationID: string) => {
         //선택한 장소의 사진 데이터 및 정보를 불러옵니다.
@@ -111,7 +81,7 @@ export default function LocationTheme(): React.ReactElement {
                 return res;
             })
             .then(response => response.json())
-            .then((data: ApiResponse) => {
+            .then((data: ApiResponseImage) => {
                 const items = data.response.body.items.item;
                 items.forEach(item => {
                     if (item.originimgurl) {
@@ -137,7 +107,7 @@ export default function LocationTheme(): React.ReactElement {
 
     useEffect(() => {
         if (locationID && locationTitle) {
-            fetch_location_title_description(locationTitle!);
+            fetch_location_title_description(locationID!);
             fetch_location_img_src(locationID!);
         }
     }, []);
