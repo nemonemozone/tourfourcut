@@ -9,6 +9,7 @@ import { useParams, useLocation } from "react-router-dom";
 import 'doodle.css/doodle.css'
 import { eventInfo, theme, photo_list } from "../../types/eventInfo";
 import html2canvas from "html2canvas";
+import { convertURLtoBase64 } from "./components/URLToFileObj";
 
 
 
@@ -26,8 +27,9 @@ export default function PhotoStudio(): React.ReactElement {
     // const [logo_src_list, setLogoSrcList] = useState<string[]>();
     const logo_src_list: string[] = ["/tour.png", "/kakao.png"];
     const params = useParams();
-    const eventID = params.eventID;
+    const eventID = "tourfourcut";
     const renderPhotoRef = useRef<HTMLDivElement>(null);
+    const [background_image, setBackgroundImage] = useState(location.state.img_src);
 
     const render_photo = async () => {
         const card = renderPhotoRef.current;
@@ -42,7 +44,7 @@ export default function PhotoStudio(): React.ReactElement {
     }
 
     const get_blob_from_canvas = async (_dom_element: HTMLElement) => {
-        const canvas = await html2canvas(_dom_element, { scale: 3, backgroundColor: null});
+        const canvas = await html2canvas(_dom_element, { scale: 3, backgroundColor: null });
 
         return new Promise<Blob | null>((resolve) => {
             canvas.toBlob((_blob) => {
@@ -96,6 +98,13 @@ export default function PhotoStudio(): React.ReactElement {
         setPhotoList(newPhotoList as photo_list);
     }
 
+    // useEffect(() => {
+    //     convertURLtoBase64(location.state.img_src)
+    //         .then((_base64) => setBackgroundImage(_base64));
+
+    // }, []);
+
+
     return (
         eventInfo ?
             <div className="page_photo_studio">
@@ -107,7 +116,7 @@ export default function PhotoStudio(): React.ReactElement {
                     theme={selectedTheme}
                     change_photo={change_photo}
                     photo_render_ref={renderPhotoRef}
-                    background_image_src={location.state.img_src}
+                    background_image_src={background_image}
                 />
                 <ThemePalette selectedTheme={selectedTheme} changeSelectedTheme={setSelectedTheme} />
             </div>

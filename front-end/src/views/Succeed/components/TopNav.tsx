@@ -1,15 +1,24 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function TopNav(props: any): React.ReactElement {
-   return (
-        <div className="comp_top_nav">
-            <div className="container_logo"  onClick={props.handle_logo_click}>
-                <div className="container">
-                    <img src="/LOGO_Happics.svg" />
-                </div>
-                <p className="logo_ci">Happics</p>
+    const navigate = useNavigate();
+    const handleLogoBtn = () => {
+        navigate("/" );
+    };
+    return (
+        <>
+            <div
+                className={
+                    "comp_top_nav Comp-app-bar p-2 w-full bg-white flex flex-col justify-center font-bold border-b border-[#D7D7D7]"
+                }
+                onClick={handleLogoBtn}
+            >
+                <img
+                    className="h-8 cursor-pointer"
+                    src="/LOGO_nemozone.svg"
+                ></img>
             </div>
-           
-        </div>
-    )
+        </>
+    );
 }

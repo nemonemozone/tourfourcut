@@ -46,7 +46,6 @@ export default function TopNav(props: any): React.ReactElement {
         // navigate("/" + eventID);
     }
     const is_full = (_arr: string[]) => {
-        return true;
         return _arr.every((elem) => elem.length !== 0);
     }
     const handleSubmitBtn = async () => {
@@ -62,12 +61,12 @@ export default function TopNav(props: any): React.ReactElement {
     return (
         <div className="comp_top_nav " onClick={handleLogoBtn}>
             <div className="container_logo ">
-                <div className="container">
+
                 <img
                    className="h-8 cursor-pointer"
                    src="/LOGO_nemozone.svg"
                />
-                </div>
+
             </div>
             <div className={`btn_submit ${is_full(photo_list) || "full_false"}`} onClick={handleSubmitBtn}>
                 완료

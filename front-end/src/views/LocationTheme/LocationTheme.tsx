@@ -11,6 +11,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 // import required modules
 import { EffectCoverflow, Pagination } from "swiper/modules";
+import { convertURLtoBase64 } from "../PhotoStudio/components/URLToFileObj";
 
 interface ApiResponse {
     response: {
