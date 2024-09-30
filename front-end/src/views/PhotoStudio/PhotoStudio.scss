@@ -42,12 +42,13 @@
         position: relative;
         
         .wrap_title_date {
-            z-index: 100;
+            position: relative;
+            z-index: 1;
             .title {
-                z-index: -1;
+                z-index: 2;
             }
             .date {
-                z-index: -1;
+                z-index: 2;
             }
         }
 
@@ -62,11 +63,13 @@
 
             .background_img {
                 position: absolute;
-                -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0)));
-                mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2));
+                // -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0)));
+                // mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2));
                 height: 100%;
                 top: 0;
                 left: 0;
+                opacity: 0.3;
+                z-index: 0;
             }
 
             &.pink {
@@ -227,7 +230,7 @@
                 @include theme_font($size: "large", $color: $blue);
                 line-height: 200%;
                 line-height: 100%;
-                margin-bottom: -0.25rem;
+                padding-bottom: -0.25rem;
             }
 
             .date {
@@ -419,7 +422,6 @@
             bottom: 0;
 
             .container_logo {
-                background-color: #FFFFFF;
                 @include img_container($height: 1.3rem);
             }
         }
@@ -444,7 +446,7 @@
         display: flex;
         justify-content: center;
         column-gap: 0.5rem;
-        margin-top: 1rem;
+        padding-top: 1rem;
 
         .theme_selection {
             background-color: $yellow;

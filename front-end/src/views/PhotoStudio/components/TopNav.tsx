@@ -63,9 +63,9 @@ export default function TopNav(props: any): React.ReactElement {
             <div className="container_logo ">
 
                 <img
-                   className="h-8 cursor-pointer"
-                   src="/LOGO_nemozone.svg"
-               />
+                    className="h-8 cursor-pointer"
+                    src="/LOGO_nemozone.svg"
+                />
 
             </div>
             <div className={`btn_submit ${is_full(photo_list) || "full_false"}`} onClick={handleSubmitBtn}>

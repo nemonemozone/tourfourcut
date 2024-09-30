@@ -25,11 +25,11 @@ export default function PhotoStudio(): React.ReactElement {
     const [selectedTheme, setSelectedTheme] = useState<theme>("blue");
     const [photo_list, setPhotoList] = useState<photo_list>(["", "", "", ""]);
     // const [logo_src_list, setLogoSrcList] = useState<string[]>();
-    const logo_src_list: string[] = ["/tour.png", "/kakao.png"];
+    const logo_src_list: string[] = ["/logo_kto.svg", "/kakao.svg", "/LOGO_nemozone.svg"];
     const params = useParams();
     const eventID = "tourfourcut";
     const renderPhotoRef = useRef<HTMLDivElement>(null);
-    const [background_image, setBackgroundImage] = useState(location.state.img_src);
+    const background_image = location.state.img_src;
 
     const render_photo = async () => {
         const card = renderPhotoRef.current;
@@ -99,7 +99,9 @@ export default function PhotoStudio(): React.ReactElement {
     }
 
     // useEffect(() => {
-    //     convertURLtoBase64(location.state.img_src)
+    //     // debugger;
+    //     console.log(location.state.img_src);
+    //     convertURLtoBase64("/cms/resource/94/1579194_image2_1.jpg")
     //         .then((_base64) => setBackgroundImage(_base64));
 
     // }, []);

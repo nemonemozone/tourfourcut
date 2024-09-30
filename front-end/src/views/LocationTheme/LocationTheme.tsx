@@ -15,16 +15,16 @@ import { convertURLtoBase64 } from "../PhotoStudio/components/URLToFileObj";
 
 interface ApiResponse {
     response: {
-      body: {
-        items: {
-          item: Array<{
-            "contentid": string;
-            "originimgurl": string;
-            "imgname": string;
-            "smallimageurl": string;
-          }>;
+        body: {
+            items: {
+                item: Array<{
+                    "contentid": string;
+                    "originimgurl": string;
+                    "imgname": string;
+                    "smallimageurl": string;
+                }>;
+            };
         };
-      };
     };
 }
 
@@ -43,7 +43,7 @@ export default function LocationTheme(): React.ReactElement {
 
     const handleInvoke = async (locationName: string) => {
         // Bedrock 클라이언트 생성
-        const client = new BedrockRuntimeClient({ 
+        const client = new BedrockRuntimeClient({
             region: "us-east-1",
             credentials: {
                 accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID!,
@@ -53,7 +53,7 @@ export default function LocationTheme(): React.ReactElement {
 
         // 요청 파라미터 설정
         const params: InvokeModelCommandInput = {
-            modelId: "anthropic.claude-3-haiku-20240307-v1:0", 
+            modelId: "anthropic.claude-3-haiku-20240307-v1:0",
             contentType: "application/json",
             accept: "application/json",
             body: JSON.stringify({
@@ -74,13 +74,13 @@ export default function LocationTheme(): React.ReactElement {
                 temperature: 0.7,
                 top_p: 1,
             }),
-            
+
         };
 
         try {
             const command = new InvokeModelCommand(params);
             const data = await client.send(command);
-            
+
             // 응답 처리
             if (data.body) {
                 const responseBody = JSON.parse(new TextDecoder().decode(data.body));
@@ -117,8 +117,8 @@ export default function LocationTheme(): React.ReactElement {
                     if (item.originimgurl) {
                         resPhotoList.push(item.originimgurl);
                     }
-            });
-        })
+                });
+            })
         setLocationPhotoSrcList(resPhotoList);
     };
 
@@ -130,7 +130,7 @@ export default function LocationTheme(): React.ReactElement {
         navigate("/takePhoto/tourfourcut", {
             state: {
                 title: locationTitle,
-                img_src: locationPhotoSrcList![selectedPhoto],
+                img_src: locationPhotoSrcList![selectedPhoto].split("http://tong.visitkorea.or.kr")[1],
             },
         });
     };
@@ -156,8 +156,8 @@ export default function LocationTheme(): React.ReactElement {
                                 {locationDescription}
                             </p>
                         </div>
-                        
-                        
+
+
                         <Swiper
                             effect={"coverflow"}
                             grabCursor={true}
@@ -189,7 +189,7 @@ export default function LocationTheme(): React.ReactElement {
                                             alt={`land scape number${_idx}1`}
                                             src={_img_url}
                                         />
-                                        <div className="button">{`${_idx+1}번 테마 선택`}</div>
+                                        <div className="button">{`${_idx + 1}번 테마 선택`}</div>
                                     </div>
                                 </SwiperSlide>
                             ))}
