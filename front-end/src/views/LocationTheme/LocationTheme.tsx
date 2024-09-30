@@ -51,7 +51,7 @@ export default function LocationTheme(): React.ReactElement {
             }
         });
 
-        // 요청 파라미터 설정
+        // 요청 파라미터  설정
         const params: InvokeModelCommandInput = {
             modelId: "anthropic.claude-3-haiku-20240307-v1:0",
             contentType: "application/json",
