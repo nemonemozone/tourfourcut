@@ -51,7 +51,39 @@ export default function LocationTheme(): React.ReactElement {
     >();
     const [selectedPhoto, setSelectedPhoto] = useState(0);
 
-    const fetch_location_title_description = async (_locationID: string) => {
+    const handleInvoke = async (locationName: string) => {
+        // Bedrock 클라이언트 생성
+        const client = new BedrockRuntimeClient({
+            region: "us-east-1",
+            credentials: {
+                accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID!,
+                secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY!,
+            }
+        });
+
+        // 요청 파라미터  설정
+        const params: InvokeModelCommandInput = {
+            modelId: "anthropic.claude-3-haiku-20240307-v1:0",
+            contentType: "application/json",
+            accept: "application/json",
+            body: JSON.stringify({
+                "anthropic_version": "bedrock-2023-05-31",
+                "max_tokens": 300,
+                "system": "너는 한국의 관광지에 대해서 80자 이내로 사용자에게 답해줘야 해.  <example> <input> 익선동 </input><output>익선동은 골목과 한옥이 어우러져 아름다운 매력을 풍기는 곳으로, 남녀노소 많은 관광객들이 찾는 핫플레이스로 떠오르고 있다.</output></example>",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": locationName + "에 대해서 80자 이내로 설명해줘."
+                            }
+                        ]
+                    }
+                ],
+                temperature: 0.7,
+                top_p: 1,
+            }),
 
         //선택한 장소의 설명을 불러옵니다.
         const API_URL = `https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${_locationID}&defaultYN=Y&firstImageYN=N&areacodeYN=N&catcodeYN=N&addrinfoYN=N&mapinfoYN=N&overviewYN=Y&numOfRows=1&serviceKey=${process.env.REACT_APP_TOUR_API_KEY_ENCODED}`;
