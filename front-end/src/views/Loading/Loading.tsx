@@ -18,7 +18,7 @@ export default function Loading(): React.ReactElement {
     return (
         <div className="page_loading">
             <div className="container_LOGO">
-                <img alt="Happics logo" src="/LOGO_Happics.svg" />
+                <img alt="Nemozone logo" src="/LOGO_nemozone.svg" />
             </div>
             <p className="description">{loadingText}</p>
         </div>
