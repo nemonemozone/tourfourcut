@@ -51,7 +51,7 @@ export default function LocationTheme(): React.ReactElement {
     const [selectedPhoto, setSelectedPhoto] = useState(0);
 
     const fetch_location_title_description = async (_locationID: string) => {
-        //선택한 장소의 설명을 불러옵니다.
+        //선택한 장소의 설명을 불러옵니다. 
         const API_URL = `https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${_locationID}&defaultYN=Y&firstImageYN=N&areacodeYN=N&catcodeYN=N&addrinfoYN=N&mapinfoYN=N&overviewYN=Y&numOfRows=1&serviceKey=${process.env.REACT_APP_TOUR_API_KEY_ENCODED}`;
         const res = await fetch(API_URL, {
             method: "GET"
