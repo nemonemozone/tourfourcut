@@ -138,11 +138,9 @@ function DinnerCard({ location }: { location: Location }) {
     const handle_location_clicked = (contentid: string) => {
         navigate(`/location/${contentid}`);
     };
-
     return (
         <>
             <div
-                className="comp_location"
                 onClick={() => {
                     localStorage.setItem("location_ID", location.location_ID);
                     localStorage.setItem("title", location.title);
