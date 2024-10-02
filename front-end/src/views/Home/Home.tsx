@@ -45,11 +45,11 @@ export default function Home(): React.ReactElement {
                 });
             }, (error) => {
                 console.error("Error getting geolocation:", error);
-                setMyAddress("인하로 100 인하대학교 하이테크 센터");
+                setMyAddress("인하로 100 인하대학교 하이테크 센터"); // Default Value
             });
         } else {
             console.log("Geolocation is not supported by this browser.");
-            setMyAddress("인하로 100 인하대학교 하이테크 센터");
+            setMyAddress("인하로 100 인하대학교 하이테크 센터"); // Default Value
         }
     }, []);
 
@@ -61,7 +61,7 @@ export default function Home(): React.ReactElement {
                     setMyAddress(result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name);
                 } else {
                     console.error("Failed to get address:", status);
-                    setMyAddress("인하로 100 인하대학교 하이테크 센터");
+                    setMyAddress("인하로 100 인하대학교 하이테크 센터"); // Default Value
                 }
             });
         }
